@@ -27,7 +27,7 @@ struct ponto {
 
 int main() {
     Ponto p;
-    PPonto pp;
+    PPonto* pp;
 
     pp = malloc(sizeof(struct ponto));
     
