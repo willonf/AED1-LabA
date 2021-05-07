@@ -6,12 +6,12 @@ void separar_moedas(int valor, int *nuques, int *sicles, int *galeoes);
 int main(void) {
     int compraGaleoes, compraSicles, compraNuques;
     int pagoGaleoes, pagoSicles, pagoNuques;
-    int paid = 0, cost = 0, change;
+    int paid = 0, cost, change;
     int changeGaleoes, changeSicles, changeNuques;
     int P, qtde;
     scanf("%d", &P);
     while(P != 0){
-
+        cost = 0;
         for(int i = 0; i < P; i++){
             scanf("%d%d%d%d", &qtde, &compraGaleoes, &compraSicles, &compraNuques);
             cost = cost + qtde * juntar_moedas(compraNuques, compraSicles, compraGaleoes);
