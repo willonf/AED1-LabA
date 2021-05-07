@@ -2,19 +2,41 @@
 #include "stdbool.h"
 #include "math.h"
 
+void piramide(int nivel){
+    int linha = nivel;
+    int coluna = 2*nivel - 1;
+    char piramide [linha][coluna];
+    int pivo = coluna/2;
+    for(int i = 0; i <= linha; i++) {
+        for(int j = 0; j < coluna/2 + 1; j++) {
 
-int main() {
-    int a, b;
-    while (1) {
-        scanf("%d %d", &a, &b);
-        if(a == 0 && b == a ){
-            break;
-        } else {
-            if(ehPrimoGemeo(a, b)){
-                printf("%d e %d sao gemeos\n", a, b);
+        }
+    }
+}
+
+void quadrado(int nivel) {
+    char quadrado[nivel][nivel];
+    for(int i = 0; i < nivel; i++) {
+        for(int j = 0; j < nivel; j++) {
+            if(i == 0 || i == nivel -1){
+                quadrado[i][j] = '*';
+            } else if(i > 0 && j > 0 && j<nivel-1) {
+                quadrado[i][j] = '.';
             } else {
-                printf("%d e %d nao sao gemeos\n", a, b);
+                quadrado[i][j] = '*';
             }
         }
-    } 
+    }
+    for(int i = 0; i < nivel; i++) {
+        for(int j = 0; j < nivel; j++) {
+            printf("%c", quadrado[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+
+int main() {
+    int nivel = 4;
+    quadrado(nivel);
 }
