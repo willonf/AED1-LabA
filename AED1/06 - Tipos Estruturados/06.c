@@ -25,25 +25,28 @@ void main() {
 
   for (int i = 0; i < n; i++) {
     printf("Nome:");
-    scanf("%80[^\n]", relacaoDeAlunos[i].nome);
-    scanf("%7[^\n]", relacaoDeAlunos[i].matricula);
+    scanf("%s", relacaoDeAlunos[i].nome);
+    printf("Matricula:");
+    scanf("%s", relacaoDeAlunos[i].matricula);
+    printf("Turma:");
     scanf("%c", &relacaoDeAlunos[i].turma);
+    printf("P1:");
     scanf("%f", &relacaoDeAlunos[i].p1);
+    printf("P2:");
     scanf("%f", &relacaoDeAlunos[i].p2);
+    printf("P3:");
     scanf("%f", &relacaoDeAlunos[i].p3);
   }
   imprime_aprovados(n, &relacaoDeAlunos);
   free(relacaoDeAlunos);
 }
 
-double calculaMedia(float p1, float p2, float p3)
-{
+double calculaMedia(float p1, float p2, float p3) {
   double media = (p1 + p2 + p3) / 3.0;
   return media;
 }
 
-void imprime_aprovados(int n, Aluno **turmas)
-{
+void imprime_aprovados(int n, Aluno **turmas) {
   double media;
   for (int i = 0; i < n; i++)
   {
@@ -53,7 +56,7 @@ void imprime_aprovados(int n, Aluno **turmas)
       printf("%s\n", turmas[i]->nome);
       printf("%s\n", turmas[i]->matricula);
       printf("%c\n", turmas[i]->turma);
-      printf("%f\n", media);
+      printf("%.2f\n", media);
     }
   }
 }
