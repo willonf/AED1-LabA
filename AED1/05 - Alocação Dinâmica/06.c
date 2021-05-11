@@ -11,11 +11,13 @@ int main(){
 
     scanf("%d", &m);
 	scanf("%d", &n);
+
     // Alocando matriz em cada ponteiro do vetor de ponteiros mat
     mat = (float**) malloc(m*sizeof(float*));
     if(mat == NULL) {
         exit(1);
     }
+    
     for(int i = 0; i < m; i++){
         mat[i] = malloc(n*sizeof(float));
         if(mat[i] == NULL) {
