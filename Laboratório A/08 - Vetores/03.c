@@ -1,28 +1,31 @@
 #include "stdio.h"
 #include "string.h"
-#include "stdbool.h"
 
 void main()
 {
     char word[41];
-    char wordCopy[41];
-    int N, length;
-    bool palind;
+    int N, length, compare;
+    int last = 0, tam;
     scanf("%d", &N);
 
     for (int i = 0; i < N; i++) {
+
         scanf("%s", word);
-        length = strlen(word);
-        printf("Length/2 == %d e Length == %d\n", length/2, length);
-        for(int j = 0; j < length/2; j++) {
-            if(word[j] != word[length-1-i]) {
-                palind = false;
-                printf("%s: normal\n", word);
-                break;
-            } else {
-                printf("%s: palindromo\n", word);
-                break;
-            }
+
+        char wordCopy[strlen(word)];
+        last = strlen(word) - 1;
+
+        for (int j = 0; j <= strlen(word); j++) {
+            wordCopy[j] = word[last];
+            last--;
+        }
+
+        compare = strcmp(word, wordCopy);
+        if (compare == 0) {
+            printf("%s: palindromo  |  Compare = %d\n", wordCopy, compare);
+        }
+        else {
+            printf("%s: normal  |  Compare = %d\n", wordCopy, compare);
         }
     }
 }
