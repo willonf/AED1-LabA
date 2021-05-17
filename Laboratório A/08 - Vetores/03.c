@@ -5,19 +5,19 @@ void main()
 {
     char word[41];
     int N, length, compare;
-    int last = 0, tam;
+    int last = 0;
     scanf("%d", &N);
 
     for (int i = 0; i < N; i++) {
 
         scanf("%s", word);
-
+        length = strlen(word);
         char wordCopy[strlen(word)];
-        last = strlen(word) - 1;
+        
+        last = length - 1;
 
-        for (int j = 0; j <= strlen(word); j++) {
-            wordCopy[j] = word[last];
-            last--;
+        for (int j = 0; j < length; j++) {
+            wordCopy[j] = word[last - j];
         }
 
         compare = strcmp(word, wordCopy);
