@@ -1,6 +1,8 @@
 #include "stdio.h"
 #include "stdlib.h"
 
+// Bubble Sort é um algoritmo de ordenação de vetores.
+
 void bubbleSort(int N, int* array);
 
 int main (){

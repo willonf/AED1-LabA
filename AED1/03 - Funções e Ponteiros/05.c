@@ -1,5 +1,5 @@
 #include<stdio.h>
-#
+
 int f(int n)
 {
 	static int qtde = 1;

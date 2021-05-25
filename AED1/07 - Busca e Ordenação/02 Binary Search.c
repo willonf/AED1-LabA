@@ -1,6 +1,10 @@
 #include "stdio.h"
 #include "stdlib.h"
 
+
+// Binary Search é uma algoritmo que procura por um valor em um vetor já ordenado.
+
+
 void binarySearch(int *v, int length, int x);
 
 int main (){

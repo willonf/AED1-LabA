@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct matriz
-{
-    int lin;
-    int col;
-    float *v;
+typedef struct matriz{
+  int lin;
+  int col;
+  float** v;
 } Matriz;
 
 Matriz *mat_cria(int m, int n);
@@ -27,10 +26,8 @@ void main()
     
     matrix = mat_cria(l, c);
 
-    for (int i = 0; i < l; i++)
-    {
-        for (int j = 0; j < c; j++)
-        {
+    for (int i = 0; i < l; i++) {
+        for (int j = 0; j < c; j++) {
             scanf("%f", &valor);
             mat_atribui(matrix, i, j, valor);
         }
@@ -38,10 +35,8 @@ void main()
 
     matrixTransp = transposta(matrix);
 
-    for (int i = 0; i < matrixTransp->lin; i++)
-    {
-        for (int j = 0; j < matrixTransp->col; j++)
-        {
+    for (int i = 0; i < matrixTransp->lin; i++) {
+        for (int j = 0; j < matrixTransp->col; j++) {
             printf("%.2f ", mat_acessa(matrixTransp, i, j));
         }
         printf("\n");
@@ -53,29 +48,39 @@ void main()
 }
 
 Matriz *mat_cria(int m, int n) {
-    Matriz *mat;
-    mat->v = malloc(m * sizeof(Matriz*));
-    if(mat->v == NULL){
+    Matriz *mat = (Matriz *) malloc(sizeof(Matriz));
+    if(mat == NULL){
         exit(1);
     }
-    for (int i = 0; i < m; i++)
-    {
-        mat->v[i] = malloc(n*sizeof(Matriz));
+    mat->lin = m;
+    mat->col = n;
+    float **v = (float **) malloc(m*sizeof(float*));
+    for (int i = 0; i < m; i++) {
+        v[i] = (float*) malloc(n*sizeof(float));
     }
-    
+    for (int i = 0; i < m; i++){
+        if (v[i] == NULL){
+            exit(1);
+        }
+    }
+    mat->v = v;
     return mat;
 } 
 
 void mat_libera(Matriz *mat) {
+    int lin = mat->lin;
+    for (int i = 0; i < lin; i++) {
+        free(mat->v[i]);
+    }
     free(mat);
 }
 
 void mat_atribui(Matriz *mat, int i, int j, float v) {
-    mat->v[i*mat->col+j] = v;
+    mat->v[i][j] = v;
 }
 
 float mat_acessa(Matriz *mat, int i, int j) {
-    return mat->v[i*mat->col + j];
+    return mat->v[i][j];
 }
 
 int mat_linhas(Matriz *mat) {
@@ -91,7 +96,7 @@ Matriz *transposta(Matriz *mat) {
 
     for(int i = 0; i < mat->lin; i++) {
         for (int j = 0; j < mat->col; j++) {
-            transp[j*transp->col + i] = mat[i*mat->col+j];  // n = 3
+            transp->v[j][i] = mat->v[i][j];
         } 
     }
     return transp;

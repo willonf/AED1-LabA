@@ -11,7 +11,7 @@ typedef struct matriz
 Matriz *mat_cria(int m, int n);
 void mat_libera(Matriz *mat);
 float mat_acessa(Matriz *mat, int i, int j);
-void mat_atribui(Matriz *mat, int i, int j, float v);
+void mat_atribui(Matriz *mat, int i, int j, float value);
 int mat_linhas(Matriz *mat);
 int mat_colunas(Matriz *mat);
 Matriz *transposta(Matriz *mat);
@@ -46,27 +46,36 @@ void main()
         }
         printf("\n");
     }
-    
 
     mat_libera(matrix);
     mat_libera(matrixTransp);
 }
 
 Matriz *mat_cria(int m, int n) {
-    Matriz *mat;
-    mat->v = malloc(m * n * sizeof(float));
+    Matriz *mat = (Matriz*) malloc(sizeof(Matriz));
     if(mat->v == NULL){
         exit(1);
     }
+    mat->lin = m;
+    mat->col = n;
+
+    float *v = (float *) malloc(m*n*sizeof(float));
+    if(v == NULL) {
+        exit(1);
+    }
+
+    mat->v = v;
     return mat;
-} 
+}
 
 void mat_libera(Matriz *mat) {
+    free(mat->v);
     free(mat);
 }
 
-void mat_atribui(Matriz *mat, int i, int j, float v) {
-    mat->v[i*mat->col+j] = v;
+void mat_atribui(Matriz *mat, int i, int j, float value) {
+    float *v = mat->v;
+    v[i*mat->col + j] = value;
 }
 
 float mat_acessa(Matriz *mat, int i, int j) {
@@ -82,11 +91,12 @@ int mat_colunas(Matriz *mat) {
 }
 
 Matriz *transposta(Matriz *mat) {
-    Matriz *transp = mat_cria(mat->col, mat->lin);
+    Matriz *transp;
+    transp = mat_cria(mat->col, mat->lin);
 
     for(int i = 0; i < mat->lin; i++) {
         for (int j = 0; j < mat->col; j++) {
-            transp[j*transp->col + i] = mat[i*mat->col+j];  // n = 3
+            transp->v[j*transp->col + i] = mat->v[i*mat->col+j];  // n = 3
         } 
     }
     return transp;
