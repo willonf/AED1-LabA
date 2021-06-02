@@ -1,0 +1,17 @@
+PILHAS
+LiFo (Last in, First out)
+Push: insere elemento no topo
+Pop: remove elemento do topo
+Só é possível acessar os elementos das extremidades
+Pode ser implementado com vetor ou com lista
+
+
+FILAS
+FiFo (First in, First out)
+É necessário definir o início e o fim da fila
+Funções de uma fila:
+-Criar fila vazia
+-Inserir elemento no fim
+-Retirar um elemento do início
+-Verificar se a fila está vazia
+-Liberar a fila (memória)
