@@ -1,10 +1,8 @@
-PILHAS
-LiFo (Last in, First out)
+Pilhas LiFo (Last in, First out)
 Push: insere elemento no topo
 Pop: remove elemento do topo
 Só é possível acessar os elementos das extremidades
 Pode ser implementado com vetor ou com lista
-
 
 FILAS
 FiFo (First in, First out)

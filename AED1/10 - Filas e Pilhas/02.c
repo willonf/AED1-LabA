@@ -3,6 +3,7 @@
 // #include "pilha.h"
 
 typedef struct pilha Pilha;
+typedef struct pilhaNo PilhaNo;
 Pilha *pilha_cria();
 void pilha_push(Pilha *p, float v);
 float pilha_pop(Pilha *p);
@@ -12,50 +13,54 @@ float pilha_imprime(Pilha *p);
 
 typedef struct pilha
 {
-    int n;
-    int dim;
-    float *vetor;
+    PilhaNo *topo;
 } Pilha;
+
+typedef struct pilhaNo {
+    float numero;
+    PilhaNo *prox;
+} PilhaNo;
+
 
 Pilha *pilha_cria()
 {
     Pilha *novaPilha = (Pilha *)malloc(sizeof(Pilha));
-    novaPilha->dim = 1;
-    novaPilha->vetor = malloc(novaPilha->dim * sizeof(float));
-    novaPilha->n = 0;
+    novaPilha->topo = NULL;
     return novaPilha;
+
 }
 
 void pilha_push(Pilha *p, float v)
 {
-    if (p->n == p->dim)
-    {
-        p->dim = 2 * p->dim;
-        p->vetor = realloc(p->vetor, p->dim * sizeof(float));
-    }
-    p->vetor[p->n] = v;
-    p->n = p->n + 1;
+    PilhaNo *novoNo = malloc(sizeof(PilhaNo));
+    novoNo->numero = v;
+    novoNo->prox = p->topo;
+    p->topo = novoNo;
 }
 
 int pilha_vazia(Pilha *p)
 {
-    return (p->n == 0);
+    return (p->topo == NULL);
 }
 
 float pilha_pop(Pilha *p)
 {
-    if (pilha_vazia(p))
-    {
-        exit(1);
-    }
-    p->n = p->n - 1;
-    float v = p->vetor[p->n];
+    PilhaNo *aux = p->topo;
+    float v = aux->numero;
+    p->topo = p->topo->prox;
+    free(aux);
     return v;
 }
 
 void pilha_libera(Pilha *p)
 {
-    free(p->vetor);
+    PilhaNo *aux = p->topo;
+    while (aux != NULL)
+    {
+        PilhaNo *aux2 = aux->prox;
+        free(aux);
+        aux = aux2;
+    }
     free(p);
 }
 
@@ -65,9 +70,9 @@ float pilha_imprime(Pilha *p)
         printf("*");
         exit(1);
     }
-    for (int i = p->n-1; i >= 0; i--)
+    for (PilhaNo *aux = p->topo; aux != NULL; aux= aux->prox)
     {
-        printf("%.2f\n", p->vetor[i]);
+        printf("%.2f\n", aux->numero);
     }
 }
 

@@ -37,7 +37,7 @@ float pilha_pop(Pilha *p)
         printf("A pilha está vazia");
         exit(2);
     }
-    p->n = p->n - 1;
+    p->n = p->n - 1; // Isso por que sempre que um push é realizado, n = n + 1. O [n+1], teoricamente está vazio.
     float v = p->vetor[p->n];
     return v;
 }
