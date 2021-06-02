@@ -9,8 +9,8 @@
 // Arquivo ".h": contém os protótipos.
 
 // Recomendado:
-// No arquivo .c colocamos structs
-// No arquivo .h fazemos o typedef
+// No arquivo .c colocamos as structs e funções
+// No arquivo .h coloca-se as interfaces de structs (typedefs) e de funções
 
 // Um TAD consiste em:
 // Uma interface que indica as operações que um tipo suporta, parâmetros e resultados. Arquivo .h
