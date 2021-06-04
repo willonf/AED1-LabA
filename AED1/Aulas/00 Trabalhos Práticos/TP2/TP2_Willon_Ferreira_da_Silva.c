@@ -4,11 +4,20 @@
 #include "stdbool.h"
 #include "TorreDeHanoi.h"
 
+
+
+Pino **criarPinos(int n);
+int moverDisco(Pino **pinos, int pinoOrigem, int pinoDestino);
+void imprimir(Pino **pinos, int numPinos, int numDiscos);
+
 int main()
 {
 
     int m, n;
     int p1, p2;
+    int pino = 0;
+    
+
 
     // Leitura da quantidade n de pinos
     while (true)
@@ -42,6 +51,34 @@ int main()
         }
     }
 
-    criarPino();
-    criarDisco(m);
+    Pino **pinos = criarPinos(n);
+    for (int i = m - 1; i >= 0; i--)
+    {
+        int pos = 0;
+        criarDisco(i);
+    }
+}
+
+Pino **criarPinos(int n)
+{
+    Pino **novoPino = malloc(n * sizeof(Pino*));
+    for (int i = 0; i < n; i++) {
+        novoPino[i] = criarPino();
+    }
+    return novoPino;
+}
+
+int moverDisco(Pino **pinos, int pinoOrigem, int pinoDestino)
+{
+    //pop + push
+
+}
+
+void imprimir(Pino **pinos, int numPinos, int numDiscos)
+{
+    for (int i = 0; i < numPinos; i++)
+    {
+        
+    }
+    
 }

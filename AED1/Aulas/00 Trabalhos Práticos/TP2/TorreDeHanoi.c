@@ -5,13 +5,13 @@
 struct disco // Nó da Pilha
 {
     // O disco é representado por uma fila
-    Disco *next;   // Ponteiro que aponta para o próximo disco
     char tamDisco; // Tamanho do disco
+    Disco *next;   // Ponteiro que aponta para o próximo disco
 };
 
-struct pino //Pilha (de discos)
+struct pino //Pilha de discos
 {
-    // O disco é representado por uma pilha de discos
+    // O pino é representado por uma pilha de discos
     Disco *topo;    // Ponteiro para o topo da pilha
     char NumDiscos; //quantidade de discos
 };
@@ -21,53 +21,45 @@ struct pino //Pilha (de discos)
 Pino *criarPino()
 {
     Pino *p = malloc(sizeof(Pino));
+    p->topo = NULL;
     p->NumDiscos = 0;
     return p;
 }
 
-Pino **criarPinos(int n)
-{
-    Pino **pino = malloc(n * sizeof(Pino*));
-    for (int i = 0; i < n; i++) {
-        pino[i] = criarPino();
-    }
-    return pino;
-}
-
 Disco *criarDisco(int tam)
 {
-    Disco *disco = malloc(sizeof(Disco));
-    disco->tamDisco = tam;
-    return disco;
+    Disco *novoDisco = malloc(sizeof(Disco));
+    novoDisco->next = NULL;
+    novoDisco->tamDisco = tam;
+    return novoDisco;
 }
 
 
 Disco *pop(Pino *pino)
 {
+    Disco *aux = pino->topo;
+    pino->topo = pino->topo->next;
+    return aux;
 }
 
 
 void push(Pino *pino, Disco *disco)
 {
+    Pino * aux = pino->topo->next;
+    pino->topo = disco;
+    pino->topo->next = aux;
+    pino->NumDiscos = pino->NumDiscos + 1;
 }
 
 
 void excluirPino(Pino *pino)
 {
-}
-
-
-// Other functions
-
-int moverDisco(Pino **pinos, int pinoOrigem, int pinoDestino)
-{
-}
-
-void imprimir(Pino **pinos, int numPinos, int numDiscos)
-{
-    for (int i = 0; i < numPinos; i++)
+    Pino *aux = pino->topo;
+    while (aux != NULL)
     {
-        
+        Pino *aux2 = aux->topo;
+        free(aux);
+        aux = aux2;
     }
-    
+    free(pino);
 }
