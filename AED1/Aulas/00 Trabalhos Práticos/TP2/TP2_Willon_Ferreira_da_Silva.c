@@ -56,15 +56,12 @@ int main()
     for (int i = 0; i < m; i++)
     {
         Disco *disco = criarDisco(tam);
-        tam--;
         push(vetorPinos[0], disco);
-        free(disco);
+        tam--;
     }
 
-    imprimir(vetorPinos, n, m);
-
     // Início do jogo (chamada da função Jogar)
-    // jogar();
+    jogar(vetorPinos, n, m);
 }
 
 Pino **criarPinos(int n)
@@ -94,32 +91,107 @@ int moverDisco(Pino **pinos, int pinoOrigem, int pinoDestino)
     return 1;
 }
 
+int pegaTamDisco(Pino *pino, int numPinos)
+{
+    int tamDisco = 0;
+
+    for (Disco *aux = pino->topo; aux != NULL; aux = aux->next)
+    {
+        tamDisco = aux->tamDisco;
+    }
+
+    return tamDisco;
+}
+
 void imprimir(Pino **pinos, int numPinos, int numDiscos)
 {
     // Deverá receber como parâmetro um vetor de Pino (pinos),
     // a quantidade de pinos (numPinos) e
     // a quantidade de discos (numDiscos)
     // e imprimir todos os pinos e discos
-    int dist = 2 * numDiscos + 2;
-    for (int i = 0; i < numDiscos; i++)
+
+    int pinoAtual = 0;
+    int tamDisco;
+    int qtdeDiscos;
+    int auxDiscos;
+    int espacos = numDiscos + 1, auxEspacos = espacos;
+    int k = 0;
+
+    // Escrita dos pinos (|)
+    for (int i = 0; i < numPinos; i++)
     {
-        for (int j = 0; j < numPinos; j++)
+        qtdeDiscos = pinos[i]->numDiscos;
+        tamDisco = pegaTamDisco(pinos[i], numPinos);
+        auxDiscos = tamDisco;
+
+        // Escrita dos discos (_)
+        for (int j = 0; j < numDiscos; j++)
         {
-            printf("%5c", '|');
-            /* code */
+
+            if (qtdeDiscos > 0)
+            {
+                while (tamDisco)
+                {
+                    printf("%c", '_');
+                    tamDisco--;
+                }
+                tamDisco = auxDiscos;
+                printf("|");
+                while (tamDisco)
+                {
+                    printf("%c", '_');
+                    tamDisco--;
+                }
+                printf("\n");
+            }
+            else
+            {
+                printf("%*c\n", espacos, '|');
+            }
+
+            espacos--;
+            tamDisco = auxDiscos;
+            auxDiscos++;
+            espacos = auxEspacos;
         }
-        printf("\n");
+
+        printf("\n\n");
     }
 }
 
-// void jogar(Pino **pinos, int qtdePinos)
-void jogar()
+void jogar(Pino **pinos, int numPinos, int numDiscos)
 {
     int pinoOrigem, pinoDestino;
+    int jogadas = 0;
+    int cond;
     while (true)
     {
-        // imprimir()
-        printf("Insira os pinos de origem e de destino: ");
-        scanf("%d%d", &pinoOrigem, &pinoDestino);
+        imprimir(pinos, numPinos, numDiscos);
+
+        while (true)
+        {
+            printf("Insira os pinos de origem e de destino: ");
+            scanf("%d%d", &pinoOrigem, &pinoDestino);
+            cond = moverDisco(pinos, pinoOrigem-1, pinoDestino-1);
+            if (cond)
+            {
+                jogadas++;
+                break;
+            }
+            else
+            {
+                printf("Movimento invalido");
+            }
+        }
+        printf("\n");
+        for (int i = 0; i < numPinos; i++)
+        {
+            if (pinos[i]->numDiscos == 3)
+            {
+                printf("PARABENS VOCE CONSEGUIU\n");
+                printf("TOTAL DE JOGADAS: %d", jogadas);
+                break;
+            }
+        }
     }
 }

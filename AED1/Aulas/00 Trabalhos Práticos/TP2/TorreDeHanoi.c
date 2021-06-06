@@ -3,9 +3,6 @@
 
 // Nó da Pilha
 
-
-
-
 // Interface functions
 Pino *criarPino()
 {
@@ -23,7 +20,6 @@ Disco *criarDisco(int tam)
     return novoDisco;
 }
 
-
 Disco *pop(Pino *pino)
 {
     Disco *aux = pino->topo;
@@ -32,15 +28,21 @@ Disco *pop(Pino *pino)
     return aux;
 }
 
-
 void push(Pino *pino, Disco *disco)
 {
-    Disco * aux = pino->topo->next;
-    pino->topo = disco;
-    pino->topo->next = aux;
     pino->numDiscos = pino->numDiscos + 1;
+    if (pino->topo == NULL)
+    {
+        pino->topo = disco;
+        pino->topo->next = NULL;
+    }
+    else
+    {
+        Disco *aux = pino->topo->next;
+        pino->topo = disco;
+        pino->topo->next = aux;
+    }
 }
-
 
 void excluirPino(Pino *pino)
 {
