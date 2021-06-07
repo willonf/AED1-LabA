@@ -53,11 +53,9 @@ int main()
 
     // Inserção dos discos no primeiro pino
     int tam = m;
-    Disco **vetorDiscos = (Disco **) malloc(m*sizeof(Disco*));
     for (int i = 0; i < m; i++)
     {
-        vetorDiscos[i] = criarDisco(tam);
-        push(vetorPinos[0], vetorDiscos[i]);
+        push(vetorPinos[0], criarDisco(tam));
         tam--;
     }
 
@@ -92,26 +90,62 @@ int moverDisco(Pino **pinos, int pinoOrigem, int pinoDestino)
     return 1;
 }
 
-int pegaTamDisco(Pino *pino, int numPinos)
+int pegaEspacos(Pino *pino, int numPinos)
 {
-    int tamDisco = 0;
+    int espacos = 0;
 
     for (Disco *aux = pino->topo; aux != NULL; aux = aux->next)
     {
-        tamDisco = aux->tamDisco;
+        espacos = aux->tamDisco;
     }
 
-    return tamDisco;
+    return espacos;
 }
 
 void imprimir(Pino **pinos, int numPinos, int numDiscos)
 {
-
-    int pinoAtual = 0;
-    int qtdeDiscos = pinos[pinoAtual]->numDiscos;
-    for (Disco *aux = pinos[pinoAtual]->topo; aux != NULL; aux = aux->next)
+    char underline = '_';
+    char traco = '|';
+    char espaco = ' ';
+    int tamDisco = pinos[0]->topo->tamDisco;
+    for (int i = 0; i < numPinos; i++)
     {
-        printf("Tam disco %d\n", aux->tamDisco);
+        int espacos = pegaEspacos(pinos[0], numPinos) + 1;
+        // Impressão dos discos
+        for (int j = 0; j < numDiscos; j++)
+        {
+            for (int j = 0; j < espacos - tamDisco; j++)
+            {
+                printf("%c", espaco);
+            }
+
+            for (int j = 0; j < tamDisco; j++)
+            {
+                printf("%c", underline);
+            }
+
+            printf("%c", traco);
+            for (int j = 0; j < tamDisco; j++)
+            {
+                printf("%c", underline);
+            }
+            printf("\n");
+            tamDisco++;
+        }
+
+        // Impressão da base
+        for (int k = 0; k < espacos; k++)
+        {
+            printf("%c", underline);
+        }
+
+        printf("%c", traco);
+        for (int k = 0; k < espacos; k++)
+        {
+            printf("%c", underline);
+        }
+        printf("\n%*d\n", espacos + 1, i + 1);
+        printf("\n");
     }
 }
 
