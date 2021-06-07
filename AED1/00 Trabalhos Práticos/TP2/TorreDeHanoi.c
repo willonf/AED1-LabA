@@ -15,7 +15,7 @@ Pino *criarPino()
 Disco *criarDisco(int tam)
 {
     Disco *novoDisco = malloc(sizeof(Disco));
-    novoDisco->next = NULL;
+    // novoDisco->next = NULL;
     novoDisco->tamDisco = tam;
     return novoDisco;
 }
@@ -34,13 +34,13 @@ void push(Pino *pino, Disco *disco)
     if (pino->topo == NULL)
     {
         pino->topo = disco;
-        pino->topo->next = NULL;
+        disco->next = NULL;
     }
     else
     {
-        Disco *aux = pino->topo->next;
+        Disco *aux = pino->topo;
         pino->topo = disco;
-        pino->topo->next = aux;
+        disco->next = aux;
     }
 }
 
