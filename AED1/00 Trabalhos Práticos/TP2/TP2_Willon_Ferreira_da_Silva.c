@@ -107,10 +107,12 @@ void imprimir(Pino **pinos, int numPinos, int numDiscos)
     char underline = '_';
     char traco = '|';
     char espaco = ' ';
-    int tamDisco = pinos[0]->topo->tamDisco;
+    int pinoAtual = 0;
+
     for (int i = 0; i < numPinos; i++)
     {
-        int espacos = pegaEspacos(pinos[0], numPinos) + 1;
+        int tamDisco = pinos[pinoAtual]->topo->tamDisco;
+        int espacos = pegaEspacos(pinos[pinoAtual], numPinos) + 1;
         // Impressão dos discos
         for (int j = 0; j < numDiscos; j++)
         {
@@ -146,6 +148,7 @@ void imprimir(Pino **pinos, int numPinos, int numDiscos)
         }
         printf("\n%*d\n", espacos + 1, i + 1);
         printf("\n");
+        pinoAtual++;
     }
 }
 
