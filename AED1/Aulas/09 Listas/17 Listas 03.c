@@ -1,4 +1,5 @@
 // LISTAS CIRCULARES
+// Em uma lista circular o último elemento tem o "prox" apontando para o primeiro elemento da lista
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -94,7 +95,8 @@ int removerElemento(Lista *lista, int chaveIdade)
                 else
                 {
                     anterior->prox = aux->prox;
-                    if(aux == lista->atual) {
+                    if (aux == lista->atual)
+                    {
                         lista->atual = aux->prox;
                     }
                 }
