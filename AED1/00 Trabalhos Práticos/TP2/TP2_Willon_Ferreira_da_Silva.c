@@ -125,17 +125,17 @@ int pegaEspacos(Pino *pino, int numPinos, int numDiscos)
     }
 }
 
-int pegaUltimoDisco(Pino *pino, int numPinos, int numDiscos)
+int pegaTamDisco(Pino *pino, int numPinos, int numDiscos)
 {
-    int tamUltimoDisco = 0;
+    int tamDisco;
 
     if (pino->topo)
     {
         for (Disco *aux = pino->topo; aux != NULL; aux = aux->next)
         {
-            tamUltimoDisco = aux->tamDisco;
+            tamDisco = aux->tamDisco;
         }
-        return tamUltimoDisco;
+        return tamDisco;
     }
     else
     {
@@ -149,81 +149,55 @@ void imprimir(Pino **pinos, int numPinos, int numDiscos)
     char traco = '|';
     char espaco = ' ';
     int pinoAtual = 0;
+    for (int i = 0; i < numPinos; i++)
+    {
+        Disco *aux = pinos[i]->topo;
+        int tamDisco = aux->tamDisco;
+        for (int j = 0; j < numDiscos; j++)
+        {
+            printf("Pino %d - Tam disco %d = %d\n", i, j, tamDisco);
+        }
+         aux = aux->next;
+    }
     // for (int i = 0; i < numPinos; i++)
     // {
-
-    int cond = pinos[pinoAtual]->numDiscos;
-    int espacos = pegaEspacos(pinos[pinoAtual], numPinos, numDiscos) + 1;
-    // if (cond > 0)
-    // {
-    //     int tamDisco = pinos[pinoAtual]->topo->tamDisco;
-    //     // Impressão dos discos
+    //     int espacos = pegaEspacos(pinos[i], numPinos, numDiscos) + 1;
+    //     Disco *aux = pinos[i]->topo;
+    //     int tamDisco = aux->tamDisco;
     //     for (int j = 0; j < numDiscos; j++)
     //     {
+    //         //impressão do disco
     //         for (int j = 0; j < espacos - tamDisco; j++)
     //         {
     //             printf("%c", espaco);
     //         }
-
     //         for (int j = 0; j < tamDisco; j++)
     //         {
     //             printf("%c", underline);
     //         }
-
     //         printf("%c", traco);
+    //         //impressão do disco
     //         for (int j = 0; j < tamDisco; j++)
     //         {
     //             printf("%c", underline);
     //         }
     //         printf("\n");
-    //         tamDisco++;
     //     }
-    // }
-    // else
-    // {
-    //     for (int i = 0; i < numDiscos; i++)
+    //     // Impressão da base
+    //     for (int k = 0; k < espacos; k++)
     //     {
-    //         printf("%*c\n", espacos + 1, traco);
+    //         printf("%c", underline);
     //     }
+
+    //     printf("%c", traco);
+    //     for (int k = 0; k < espacos; k++)
+    //     {
+    //         printf("%c", underline);
+    //     }
+    //     printf("\n%*d\n", espacos + 1, i + 1);
+    //     printf("\n");
+    //     aux = aux->next;
     // }
-
-    for (int i = 0; i < numPinos; i++)
-    {
-        int tamDisco = pinos[i]->topo->tamDisco;
-        for (int j = 0; j < numDiscos; j++)
-        {
-            //impressão do disco
-            for (int j = 0; j < espacos - tamDisco; j++)
-            {
-                printf("%c", espaco);
-            }
-            for (int j = 0; j < tamDisco; j++)
-            {
-                printf("%c", underline);
-            }
-            printf("%c", traco);
-            //impressão do disco
-            for (int j = 0; j < tamDisco; j++)
-            {
-                printf("%c", underline);
-            }
-            printf("\n");
-            tamDisco = pinos[i]->topo->next->tamDisco;
-        }
-        // Impressão da base
-        for (int k = 0; k < espacos; k++)
-        {
-            printf("%c", underline);
-        }
-
-        printf("%c", traco);
-        for (int k = 0; k < espacos; k++)
-        {
-            printf("%c", underline);
-        }
-        printf("\n%*d\n", espacos + 1, i + 1);
-        printf("\n");
-    }
     // }
 }
 
