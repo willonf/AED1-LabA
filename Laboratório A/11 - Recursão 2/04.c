@@ -8,39 +8,22 @@ int main(void)
     int num;
     while (scanf("%d", &num) != EOF)
     {
-        if (num == 0)
-        {
-            printf("%d\n", num);
-            continue;
-        }
         agrupa(num);
+     printf("\n");
     }
 }
 
 void agrupa(int numero)
 {
     int divisao = numero / 1000;
-    int cont = 1000;
-    while (divisao >= 1000)
+    int resto =  numero % 1000;  
+    if(numero >= 1000)
     {
-        divisao /= 1000;
-        cont *= 1000;
-    }
-    int resto = numero - divisao * cont;
-    if (!divisao)
-    {
-        if (numero == 0)
-        {
-            printf("%03d\n", numero);
-        }
-        else
-        {
-            printf("%d\n", numero);
-        }
+      agrupa(divisao);
+      printf(".%03d", resto);
     }
     else
     {
-        printf("%d.", divisao);
-        agrupa(resto);
+        printf("%d", numero);
     }
 }

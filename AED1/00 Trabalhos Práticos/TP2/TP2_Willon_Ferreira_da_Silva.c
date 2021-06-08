@@ -78,18 +78,32 @@ Pino **criarPinos(int n)
 int moverDisco(Pino **pinos, int pinoOrigem, int pinoDestino)
 {
     //pop do topo origem + push no topo destino
-    // Validar tamanho do disco no topo da origem e tam do disco do destino
     // Validar quantidade de discos no disco do destino
+    // Validar tamanho do disco no topo da origem e tam do disco do destino
 
     Disco *aux;
-    bool condicao = pinos[pinoDestino]->topo->tamDisco > pinos[pinoOrigem]->topo->tamDisco;
-    if (condicao)
+    // Condição 1: há discos no pino de origem?
+    bool condicao1 = pinos[pinoOrigem]->numDiscos > 0;
+
+    // Condicao 2: existe algum disco no pino de destino?
+    bool condicao2 = pinos[pinoDestino]->topo != NULL;
+
+    // Condição 3: é possível inserir um disco no pino de destino?
+    bool condicao3 = pinos[pinoDestino]->numDiscos >= 0 && pinos[pinoDestino]->numDiscos < 3;
+
+    // Condição 4: o tamanho do disco do topo no destino é maior que o disco no topo da origem?
+    bool condicao4 = pinos[pinoDestino]->topo->tamDisco > pinos[pinoOrigem]->topo->tamDisco;
+
+    // printf("Pino destino numdiscos %d %d\n", pinos[pinoDestino]->numDiscos, condicao2);
+    // printf("Pino destino numdiscos %d %d\n", pinos[pinoOrigem]->numDiscos, condicao1 );
+
+    if (condicao1 && condicao3)
     {
-        return 0;
+        aux = pop(pinos[pinoOrigem]);
+        push(pinos[pinoDestino], aux);
+        return 1;
     }
-    aux = pop(pinos[pinoOrigem]);
-    push(pinos[pinoDestino], aux);
-    return 1;
+    return 0;
 }
 
 int pegaEspacos(Pino *pino, int numPinos, int numDiscos)
@@ -103,10 +117,21 @@ int pegaEspacos(Pino *pino, int numPinos, int numDiscos)
             espacos = aux->tamDisco;
         }
         return espacos;
-    } else {
+    }
+    else
+    {
         return numDiscos;
     }
 }
+
+// int pegaTamDisco(Pino *pino, )
+// {
+//     if (pino->topo->tamDisco)
+//     {
+//         return pino->topo->tamDisco;
+//     }
+//     return
+// }
 
 void imprimir(Pino **pinos, int numPinos, int numDiscos)
 {
@@ -114,56 +139,57 @@ void imprimir(Pino **pinos, int numPinos, int numDiscos)
     char traco = '|';
     char espaco = ' ';
     int pinoAtual = 0;
-    printf("Tam disco %d\n", pinos[1]->numDiscos);
-    printf("Tam disco %d\n", pinos[1]->numDiscos);
-    // for (int i = 0; i < numPinos; i++)
-    // {
-    //     int tamDisco = pinos[pinoAtual]->topo->tamDisco;
-    //     int espacos = pegaEspacos(pinos[pinoAtual], numPinos, numDiscos) + 1;
-    //     int cond = pinos[pinoAtual]->numDiscos;
-    //     if (cond)
-    //     {
-    //         // Impressão dos discos
-    //         for (int j = 0; j < numDiscos; j++)
-    //         {
-    //             for (int j = 0; j < espacos - tamDisco; j++)
-    //             {
-    //                 printf("%c", espaco);
-    //             }
+    for (int i = 0; i < numPinos; i++)
+    {
+        int cond = pinos[pinoAtual]->numDiscos;
+        int espacos = pegaEspacos(pinos[pinoAtual], numPinos, numDiscos) + 1;
+        if (cond > 0)
+        {
+            int tamDisco = pinos[pinoAtual]->topo->tamDisco;
+            // Impressão dos discos
+            for (int j = 0; j < numDiscos; j++)
+            {
+                for (int j = 0; j < espacos - tamDisco; j++)
+                {
+                    printf("%c", espaco);
+                }
 
-    //             for (int j = 0; j < tamDisco; j++)
-    //             {
-    //                 printf("%c", underline);
-    //             }
+                for (int j = 0; j < tamDisco; j++)
+                {
+                    printf("%c", underline);
+                }
 
-    //             printf("%c", traco);
-    //             for (int j = 0; j < tamDisco; j++)
-    //             {
-    //                 printf("%c", underline);
-    //             }
-    //             printf("\n");
-    //             tamDisco++;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         printf("oi\n");
-    //     }
-    //     // Impressão da base
-    //     for (int k = 0; k < espacos; k++)
-    //     {
-    //         printf("%c", underline);
-    //     }
+                printf("%c", traco);
+                for (int j = 0; j < tamDisco; j++)
+                {
+                    printf("%c", underline);
+                }
+                printf("\n");
+                tamDisco++;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < numDiscos; i++)
+            {
+                printf("%*c\n", espacos + 1, traco);
+            }
+        }
+        // Impressão da base
+        for (int k = 0; k < espacos; k++)
+        {
+            printf("%c", underline);
+        }
 
-    //     printf("%c", traco);
-    //     for (int k = 0; k < espacos; k++)
-    //     {
-    //         printf("%c", underline);
-    //     }
-    //     printf("\n%*d\n", espacos + 1, i + 1);
-    //     printf("\n");
-    //     pinoAtual++;
-    // }
+        printf("%c", traco);
+        for (int k = 0; k < espacos; k++)
+        {
+            printf("%c", underline);
+        }
+        printf("\n%*d\n", espacos + 1, i + 1);
+        printf("\n");
+        pinoAtual++;
+    }
 }
 
 void jogar(Pino **pinos, int numPinos, int numDiscos)
@@ -179,6 +205,7 @@ void jogar(Pino **pinos, int numPinos, int numDiscos)
         {
             printf("Insira os pinos de origem e de destino: ");
             scanf("%d%d", &pinoOrigem, &pinoDestino);
+            //Problema a partir daqui
             cond = moverDisco(pinos, pinoOrigem - 1, pinoDestino - 1);
             if (cond)
             {
@@ -187,7 +214,8 @@ void jogar(Pino **pinos, int numPinos, int numDiscos)
             }
             else
             {
-                printf("Movimento invalido");
+                printf("Movimento invalido\n");
+                imprimir(pinos, numPinos, numDiscos);
             }
         }
         printf("\n");

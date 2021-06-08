@@ -15,7 +15,6 @@ Pino *criarPino()
 Disco *criarDisco(int tam)
 {
     Disco *novoDisco = malloc(sizeof(Disco));
-    // novoDisco->next = NULL;
     novoDisco->tamDisco = tam;
     return novoDisco;
 }
