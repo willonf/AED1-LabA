@@ -73,9 +73,10 @@ int main()
             push(vetorPinos[i], vetorDiscos2[j]);
         }
     }
+    imprimir(vetorPinos, n, m);
 
     // Início do jogo (chamada da função Jogar)
-    jogar(vetorPinos, n, m);
+    // jogar(vetorPinos, n, m);
 }
 
 Pino **criarPinos(int n)
