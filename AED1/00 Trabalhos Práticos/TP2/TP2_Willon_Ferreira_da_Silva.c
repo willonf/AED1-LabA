@@ -63,16 +63,6 @@ int main()
         push(vetorPinos[0], vetorDiscos[i]);
         tam--;
     }
-
-    for (int i = 1; i < n; i++)
-    {
-        Disco **vetorDiscos2 = (Disco **)malloc(m * sizeof(Disco *));
-        for (int j = 0; j < m; j++)
-        {
-            vetorDiscos2[j] = criarDisco(0);
-            push(vetorPinos[i], vetorDiscos2[j]);
-        }
-    }
     imprimir(vetorPinos, n, m);
 
     // Início do jogo (chamada da função Jogar)
@@ -108,24 +98,6 @@ int moverDisco(Pino **pinos, int pinoOrigem, int pinoDestino)
     return 0;
 }
 
-int pegaEspacos(Pino *pino, int numPinos, int numDiscos)
-{
-    int espacos = 0;
-
-    if (pino->topo)
-    {
-        for (Disco *aux = pino->topo; aux != NULL; aux = aux->next)
-        {
-            espacos = aux->tamDisco;
-        }
-        return espacos;
-    }
-    else
-    {
-        return numDiscos;
-    }
-}
-
 int pegaTamDisco(Pino *pino, int numPinos, int numDiscos)
 {
     int tamDisco;
@@ -144,62 +116,68 @@ int pegaTamDisco(Pino *pino, int numPinos, int numDiscos)
     }
 }
 
+void imprimirBase(Pino **pinos, int index, int numPinos, int numDiscos)
+{
+    int espacos = numDiscos + 1;
+    char underline = '_';
+    char traco = '|';
+    char espaco = ' ';
+    for (int k = 0; k < espacos; k++)
+    {
+        printf("%c", underline);
+    }
+
+    printf("%c", traco);
+    for (int k = 0; k < espacos; k++)
+    {
+        printf("%c", underline);
+    }
+    printf("\n%*d\n", espacos + 1, index + 1);
+    printf("\n");
+}
+
 void imprimir(Pino **pinos, int numPinos, int numDiscos)
 {
     char underline = '_';
     char traco = '|';
     char espaco = ' ';
     int pinoAtual = 0;
+    int espacos = numDiscos + 1;
+
     for (int i = 0; i < numPinos; i++)
     {
-        Disco *aux = pinos[i]->topo;
-        int tamDisco = aux->tamDisco;
-        for (int j = 0; j < numDiscos; j++)
+        int dif = numDiscos - pinos[i]->numDiscos;
+        //impressão do disco
+        for (int j = 0; j < dif; j++)
         {
-            printf("Pino %d - Tam disco %d = %d\n", i, j, tamDisco);
+            for (int j = 0; j < espacos; j++)
+            {
+                printf("%c", espaco);
+            }
+            printf("%c\n", traco);
         }
-         aux = aux->next;
-    }
-    // for (int i = 0; i < numPinos; i++)
-    // {
-    //     int espacos = pegaEspacos(pinos[i], numPinos, numDiscos) + 1;
-    //     Disco *aux = pinos[i]->topo;
-    //     int tamDisco = aux->tamDisco;
-    //     for (int j = 0; j < numDiscos; j++)
-    //     {
-    //         //impressão do disco
-    //         for (int j = 0; j < espacos - tamDisco; j++)
-    //         {
-    //             printf("%c", espaco);
-    //         }
-    //         for (int j = 0; j < tamDisco; j++)
-    //         {
-    //             printf("%c", underline);
-    //         }
-    //         printf("%c", traco);
-    //         //impressão do disco
-    //         for (int j = 0; j < tamDisco; j++)
-    //         {
-    //             printf("%c", underline);
-    //         }
-    //         printf("\n");
-    //     }
-    //     // Impressão da base
-    //     for (int k = 0; k < espacos; k++)
-    //     {
-    //         printf("%c", underline);
-    //     }
+        for (Disco *aux = pinos[i]->topo; aux != NULL; aux = aux->next)
+        {
+            int tamDisco = aux->tamDisco;
 
-    //     printf("%c", traco);
-    //     for (int k = 0; k < espacos; k++)
-    //     {
-    //         printf("%c", underline);
-    //     }
-    //     printf("\n%*d\n", espacos + 1, i + 1);
-    //     printf("\n");
-    //     aux = aux->next;
-    // }
-    // }
+            for (int j = 0; j < espacos - tamDisco; j++)
+            {
+                printf("%c", espaco);
+            }
+            for (int j = 0; j < tamDisco; j++)
+            {
+                printf("%c", underline);
+            }
+            printf("%c", traco);
+            //impressão do disco
+            for (int j = 0; j < tamDisco; j++)
+            {
+                printf("%c", underline);
+            }
+            printf("\n");
+        }
+        imprimirBase(pinos, i, numPinos, numDiscos);
+    }
 }
 
 void jogar(Pino **pinos, int numPinos, int numDiscos)
