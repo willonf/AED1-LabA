@@ -63,10 +63,9 @@ int main()
         push(vetorPinos[0], vetorDiscos[i]);
         tam--;
     }
-    imprimir(vetorPinos, n, m);
 
     // Início do jogo (chamada da função Jogar)
-    // jogar(vetorPinos, n, m);
+    jogar(vetorPinos, n, m);
 }
 
 Pino **criarPinos(int n)
@@ -81,19 +80,31 @@ Pino **criarPinos(int n)
 
 int moverDisco(Pino **pinos, int pinoOrigem, int pinoDestino)
 {
-    //pop do topo origem + push no topo destino
-    // Validar quantidade de discos no disco do destino
-    // Validar tamanho do disco no topo da origem e tam do disco do destino
-
     Disco *aux;
-    bool condicao1 = pinos[pinoOrigem]->numDiscos > 0;
-    bool condicao2 = pinos[pinoDestino]->numDiscos >= 0 && pinos[pinoDestino]->numDiscos < 3;
 
-    if (condicao1 && condicao2)
+    bool condicao1 = pinos[pinoOrigem]->numDiscos > 0; // Há discos no pino de origem?
+
+    if (condicao1) // Há discos no pino de origem
     {
-        aux = pop(pinos[pinoOrigem]);
-        push(pinos[pinoDestino], aux);
-        return 1;
+        bool condicao2 = pinos[pinoDestino]->numDiscos > 0; // Há discos no pino de destino?
+        if (condicao2)
+        {
+            // Condição 3: O tamanho do disco no topo da origem é menor que o disco no topo do destino
+            bool condicao3 = pinos[pinoOrigem]->topo->tamDisco < pinos[pinoDestino]->topo->tamDisco;
+            if (condicao3)
+            {
+                aux = pop(pinos[pinoOrigem]);
+                push(pinos[pinoDestino], aux);
+                return 1;
+            }
+            return 0;
+        }
+        else // Não há discos no pino de destino
+        {
+            aux = pop(pinos[pinoOrigem]);
+            push(pinos[pinoDestino], aux);
+            return 1;
+        }
     }
     return 0;
 }
@@ -143,7 +154,7 @@ void imprimir(Pino **pinos, int numPinos, int numDiscos)
     char espaco = ' ';
     int pinoAtual = 0;
     int espacos = numDiscos + 1;
-
+    printf("\n");
     for (int i = 0; i < numPinos; i++)
     {
         int dif = numDiscos - pinos[i]->numDiscos;
@@ -184,8 +195,9 @@ void jogar(Pino **pinos, int numPinos, int numDiscos)
 {
     int pinoOrigem, pinoDestino;
     int jogadas = 0;
-    int cond;
-    while (true)
+    int cond0, cond1, cond2;
+    bool acabou = false;
+    while (!acabou)
     {
         imprimir(pinos, numPinos, numDiscos);
 
@@ -193,26 +205,38 @@ void jogar(Pino **pinos, int numPinos, int numDiscos)
         {
             printf("Insira os pinos de origem e de destino: ");
             scanf("%d%d", &pinoOrigem, &pinoDestino);
-            //Problema a partir daqui
-            cond = moverDisco(pinos, pinoOrigem - 1, pinoDestino - 1);
-            if (cond)
+            cond0 = pinoOrigem - 1 < 0 || pinoOrigem - 1 > numPinos;
+            cond1 = pinoDestino - 1 < 0 || pinoDestino - 1 > numPinos;
+            if (cond0 || cond1)
             {
-                jogadas++;
-                break;
+                printf("\nMovimento invalido\n");
+                imprimir(pinos, numPinos, numDiscos);
+                continue;
             }
             else
             {
-                printf("Movimento invalido\n");
-                imprimir(pinos, numPinos, numDiscos);
+                cond2 = moverDisco(pinos, pinoOrigem - 1, pinoDestino - 1);
+                if (cond2)
+                {
+                    jogadas++;
+                    break;
+                }
+                else
+                {
+                    printf("\nMovimento invalido\n");
+                    imprimir(pinos, numPinos, numDiscos);
+                }
             }
         }
         printf("\n");
-        for (int i = 0; i < numPinos; i++)
+        for (int i = 1; i < numPinos; i++)
         {
-            if (pinos[i]->numDiscos == 3)
+            if (pinos[i]->numDiscos == numDiscos)
             {
+                imprimir(pinos, numPinos, numDiscos);
                 printf("PARABENS VOCE CONSEGUIU\n");
-                printf("TOTAL DE JOGADAS: %d", jogadas);
+                printf("TOTAL DE JOGADAS: %d\n", jogadas);
+                acabou = true;
                 break;
             }
         }
