@@ -143,7 +143,7 @@ void imprimirBase(Pino **pinos, int index, int numPinos, int numDiscos)
     {
         printf("%c", underline);
     }
-    printf("\n%*d\n", espacos + 1, index + 1);
+    printf("\n\n%*d\n", espacos + 1, index + 1);
     printf("\n");
 }
 
@@ -193,7 +193,7 @@ void imprimir(Pino **pinos, int numPinos, int numDiscos)
 
 void jogar(Pino **pinos, int numPinos, int numDiscos)
 {
-    int pinoOrigem, pinoDestino;
+    int p1, p2;
     int jogadas = 0;
     int cond0, cond1, cond2;
     bool acabou = false;
@@ -204,18 +204,13 @@ void jogar(Pino **pinos, int numPinos, int numDiscos)
         while (true)
         {
             printf("Insira os pinos de origem e de destino: ");
-            scanf("%d%d", &pinoOrigem, &pinoDestino);
-            cond0 = pinoOrigem - 1 < 0 || pinoOrigem - 1 > numPinos;
-            cond1 = pinoDestino - 1 < 0 || pinoDestino - 1 > numPinos;
-            if (cond0 || cond1)
+            scanf("%d%d", &p1, &p2);
+            cond0 = p1 >= 1 && p1 <= numPinos;
+            cond1 = p2 >= 1 && p2 <= numPinos;
+
+            if (cond0 && cond1)
             {
-                printf("\nMovimento invalido\n");
-                imprimir(pinos, numPinos, numDiscos);
-                continue;
-            }
-            else
-            {
-                cond2 = moverDisco(pinos, pinoOrigem - 1, pinoDestino - 1);
+                cond2 = moverDisco(pinos, p1 - 1, p2 - 1);
                 if (cond2)
                 {
                     jogadas++;
@@ -226,6 +221,11 @@ void jogar(Pino **pinos, int numPinos, int numDiscos)
                     printf("\nMovimento invalido\n");
                     imprimir(pinos, numPinos, numDiscos);
                 }
+            }
+            else
+            {
+                printf("\nMovimento invalido\n");
+                imprimir(pinos, numPinos, numDiscos);
             }
         }
         printf("\n");
