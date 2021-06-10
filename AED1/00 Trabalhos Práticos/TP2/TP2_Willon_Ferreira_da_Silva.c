@@ -85,6 +85,7 @@ int moverDisco(Pino **pinos, int pinoOrigem, int pinoDestino)
     bool condicao1 = pinos[pinoOrigem]->numDiscos > 0; // Há discos no pino de origem?
 
     if (condicao1) // Há discos no pino de origem
+    
     {
         bool condicao2 = pinos[pinoDestino]->numDiscos > 0; // Há discos no pino de destino?
         if (condicao2)
@@ -240,5 +241,10 @@ void jogar(Pino **pinos, int numPinos, int numDiscos)
                 break;
             }
         }
+    }
+
+    for (int i = 0; i < numPinos; i++)
+    {
+        excluirPino(pinos[i]);
     }
 }

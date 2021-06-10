@@ -1,9 +1,6 @@
 #include <stdlib.h>
 #include "TorreDeHanoi.h"
 
-// Nó da Pilha
-
-// Interface functions
 Pino *criarPino()
 {
     Pino *p = malloc(sizeof(Pino));
