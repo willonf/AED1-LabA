@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
 echo "Iniciando o executável..."
-gcc -c TP2_Willon_Ferreira_da_Silva.c
+gcc -c main.c
 gcc -c TorreDeHanoi.c
 gcc -o TP2 *.o
 rm -rf *.o
