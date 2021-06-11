@@ -51,10 +51,7 @@ int main()
     // Criação do vetor de pinos
     Pino **vetorPinos = criarPinos(n);
 
-    // n pinos
-    // m discos
-
-    // Inserção dos discos nos pinos
+    // Inserção dos discos no pino 0
     int tam = m;
     Disco **vetorDiscos = (Disco **)malloc(m * sizeof(Disco *));
     for (int i = 0; i < m; i++)
@@ -64,7 +61,7 @@ int main()
         tam--;
     }
 
-    // Início do jogo (chamada da função Jogar)
+    // Início do jogo
     jogar(vetorPinos, n, m);
 }
 
@@ -84,13 +81,13 @@ int moverDisco(Pino **pinos, int pinoOrigem, int pinoDestino)
 
     bool condicao1 = pinos[pinoOrigem]->numDiscos > 0; // Há discos no pino de origem?
 
-    if (condicao1) // Há discos no pino de origem
-    
+    if (condicao1)
+
     {
         bool condicao2 = pinos[pinoDestino]->numDiscos > 0; // Há discos no pino de destino?
         if (condicao2)
         {
-            // Condição 3: O tamanho do disco no topo da origem é menor que o disco no topo do destino
+            // Condição 3: O tamanho do disco no topo da origem é menor que o disco no topo do destino?
             bool condicao3 = pinos[pinoOrigem]->topo->tamDisco < pinos[pinoDestino]->topo->tamDisco;
             if (condicao3)
             {
@@ -110,40 +107,27 @@ int moverDisco(Pino **pinos, int pinoOrigem, int pinoDestino)
     return 0;
 }
 
-int pegaTamDisco(Pino *pino, int numPinos, int numDiscos)
-{
-    int tamDisco;
-
-    if (pino->topo)
-    {
-        for (Disco *aux = pino->topo; aux != NULL; aux = aux->next)
-        {
-            tamDisco = aux->tamDisco;
-        }
-        return tamDisco;
-    }
-    else
-    {
-        return numDiscos;
-    }
-}
-
+// Impressão da base de (2m + 3) caracteres
 void imprimirBase(Pino **pinos, int index, int numPinos, int numDiscos)
 {
     int espacos = numDiscos + 1;
     char underline = '_';
     char traco = '|';
     char espaco = ' ';
+
+    // Quantidade de '_' antes do '|'
     for (int k = 0; k < espacos; k++)
     {
         printf("%c", underline);
     }
 
     printf("%c", traco);
+    // Quantidade de '_' depois do '|'
     for (int k = 0; k < espacos; k++)
     {
         printf("%c", underline);
     }
+    // Impressão do índice do pino
     printf("\n\n%*d\n", espacos + 1, index + 1);
     printf("\n");
 }
@@ -158,8 +142,8 @@ void imprimir(Pino **pinos, int numPinos, int numDiscos)
     printf("\n");
     for (int i = 0; i < numPinos; i++)
     {
+        // Impressão da diferença de altura do pino (impressão de '|' que não "contém" discos)
         int dif = numDiscos - pinos[i]->numDiscos;
-        //impressão do disco
         for (int j = 0; j < dif; j++)
         {
             for (int j = 0; j < espacos; j++)
@@ -168,6 +152,7 @@ void imprimir(Pino **pinos, int numPinos, int numDiscos)
             }
             printf("%c\n", traco);
         }
+        // Impressão dos discos (ou seja, dos underlines)
         for (Disco *aux = pinos[i]->topo; aux != NULL; aux = aux->next)
         {
             int tamDisco = aux->tamDisco;
@@ -181,7 +166,6 @@ void imprimir(Pino **pinos, int numPinos, int numDiscos)
                 printf("%c", underline);
             }
             printf("%c", traco);
-            //impressão do disco
             for (int j = 0; j < tamDisco; j++)
             {
                 printf("%c", underline);
@@ -206,11 +190,13 @@ void jogar(Pino **pinos, int numPinos, int numDiscos)
         {
             printf("Insira os pinos de origem e de destino: ");
             scanf("%d%d", &p1, &p2);
+            // Condições de p1 e p2
             cond0 = p1 >= 1 && p1 <= numPinos;
             cond1 = p2 >= 1 && p2 <= numPinos;
 
             if (cond0 && cond1)
             {
+                // cond2 não pode ser adicionada ao primeiro if, pois dará segmentation fault
                 cond2 = moverDisco(pinos, p1 - 1, p2 - 1);
                 if (cond2)
                 {
@@ -230,6 +216,8 @@ void jogar(Pino **pinos, int numPinos, int numDiscos)
             }
         }
         printf("\n");
+
+        // Laço que verificará após cada movimento de disco se o jogo acabou ou não
         for (int i = 1; i < numPinos; i++)
         {
             if (pinos[i]->numDiscos == numDiscos)
