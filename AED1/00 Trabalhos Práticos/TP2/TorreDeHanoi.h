@@ -15,7 +15,6 @@ struct disco
     Disco *next;
 };
 
-//Pilha de discos
 struct pino
 {
     Disco *topo;
