@@ -13,11 +13,11 @@ int main(int argc, char const *argv[])
     scanf("%d", &N);
     primos = malloc(sizeof *primos * (N + 1));
     crivo(primos, N);
-    for (int i = 0; i <= N; i++ )
-    {
-        printf("[%d] = %d\n", i, primos[i]);
-    }
-    printf("\n%d", contPrimos(primos, N));
+    // for (int i = 0; i <= N; i++ )
+    // {
+    //     printf("[%d] = %d\n", i, primos[i]);
+    // }
+    printf("%d", contPrimos(primos, N));
     free(primos);
     return 0;
 }
@@ -67,7 +67,7 @@ int contPrimos(int *primos, int N)
     int maior = primos[N];
     for (int i = 0; i <= N; i++)
     {
-        if (primos[i] == 1 && i < maior)
+        if (primos[i] == 1)
         {
             contPrimos++;
         }
