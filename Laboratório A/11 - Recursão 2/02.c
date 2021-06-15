@@ -3,7 +3,116 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-int trilegal(char numero[]);
+void cp_parte(char *string, int inicio, int fim, char *parte)
+{
+	int origem = inicio;
+	int destino = 0;
+
+	while (origem <= fim)
+	{
+		parte[destino] = string[origem];
+		destino++;
+		origem++;
+	}
+	parte[destino] = 0;
+	printf("Parte: %s\n", parte);
+}
+
+int somaDigitos(char *num)
+{
+	// printf("\nNumero em somaDigitos: %s\n", num);
+	int size = strlen(num);
+	int cont = 0;
+	int soma = 0;
+	int pos = 0;
+	if (strlen(num) == 1)
+	{
+		return (int)(num[0]);
+	}
+	else
+	{
+		for (int i = 0; i < size; i++)
+		{
+			soma = soma + (num[i] - '0');
+		}
+	}
+	// printf("Soma digitos: %d -- Size: %d\n", soma, size);
+	return soma;
+}
+
+int *somaNumeros(char *num1, char *num2)
+{
+	int size = strlen(num1);
+	int n1, n2;
+	int *soma = malloc(size * sizeof(char));
+	for (int i = 0; i < size; i++)
+	{
+		n1 = num1[i]-'0';
+		n2 = num2[i]-'0';
+		soma[i] = n1 + n2;
+	}
+	printf("Soma numeros: %s\n", soma);
+	return soma;
+}
+
+int trilegal(char numero[])
+{
+	char size = strlen(numero);
+	char p1[40];
+	char p2[40];
+	char p3[40];
+	if (size == 3)
+	{
+		int intP1 = numero[0] - '0';
+		int intP2 = numero[1] - '0';
+		int intP3 = numero[2] - '0';
+		int soma = intP1 + intP2;
+		if (intP1 + intP2 > 10)
+		{
+			soma = soma % 10;
+		}
+		bool cond = soma == intP3;
+
+		if (trilegal(p1) && trilegal(p2) && trilegal(p3) && cond)
+		{
+			return 1;
+		}
+		return 0;
+	}
+	else if (size % 3 != 0)
+	{
+		if (size == 1)
+		{
+			return 1;
+		}
+		return 0;
+	}
+	else if (size > 3)
+	{
+		int *soma;
+		cp_parte(numero, 0, size / 3 - 1, p1);
+		cp_parte(numero, size / 3, 2 * size / 3 - 1, p2);
+		cp_parte(numero, 2 * size / 3, size - 1, p3);
+		int intP3 = atoi(p3);
+		int somaP1 = somaDigitos(p1);
+		int somaP2 = somaDigitos(p2);
+		int somaP3 = somaDigitos(p3);
+		bool cond1 = somaP1 == somaP2;
+		soma = somaNumeros(p1, p2);
+		printf("INT P3: %s\n", soma);
+
+		if (trilegal(p1) && trilegal(p2) && trilegal(p3))
+		{
+			printf("entrou");
+			// if (cond1 && cond2)
+			// {
+			// }
+			return 0;
+		}
+		return 0;
+	}
+}
+
 int main(void)
 {
 	char numero[101];
@@ -23,84 +132,4 @@ int main(void)
 		scanf("%s", numero);
 	}
 	trilegal(numero);
-}
-
-void cp_parte(char *string, int inicio, int fim, char *parte)
-{
-	int origem = inicio;
-	int destino = 0;
-
-	while (origem <= fim)
-	{
-		parte[destino] = string[origem];
-		destino++;
-		origem++;
-	}
-	parte[destino] = '\0';
-	printf("Parte: %s\n", parte);
-}
-
-int somaDigitos(char *num)
-{
-	int size = strlen(num);
-	int cont = 0;
-	int soma = 0;
-	int pos = 0;
-	while (cont < size)
-	{
-		soma += num[pos] - '0';
-		pos++;
-		cont++;
-	}
-	printf("Soma digitos: %d -- Size: %d\n", soma, size);
-	return soma;
-}
-
-int somaNumeros(char *num1, char *num2)
-{
-	int size = strlen(num1);
-	int soma = 0;
-	for (int i = 0; i < size; i++)
-	{
-		soma += (num1[i] - '0') + (num2[i] - '0');
-		if (soma >= 10)
-		{
-			soma = soma % 10;
-		}
-	}
-	printf("Soma numeros: %d\n", soma);
-	return soma;
-}
-
-int trilegal(char numero[])
-{
-	char size = strlen(numero);
-	char *p1 = &numero[40];
-	char *p2 = &numero[40];
-	char *p3 = &numero[40];
-
-	if (size % 3 != 0)
-	{
-		if (size == 1)
-		{
-			return 1;
-		}
-		return 0;
-	}
-	else
-	{
-		cp_parte(numero, 0, (size / 3) - 1, p1);
-		cp_parte(numero, size / 3, 2 * (size / 3) - 1, p2);
-		cp_parte(numero, 2 * (size / 3), size - 1, p3);
-		int intP3 = atoi(p3);
-		bool cond1 = somaDigitos(p1) == somaDigitos(p2);
-		bool cond2 = somaNumeros(p1, p2) == intP3;
-		printf("intP3: %d\n", intP3);
-
-		if (trilegal(p1) && trilegal(p2) && trilegal(p3) && cond1 && cond2)
-		{
-			return 1;
-		}
-		return 0;
-	}
 }
