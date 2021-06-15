@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-int multiplo(int *primos, int N);
+
 int contPrimos(int *primos, int N);
 void crivo(int *primos, int N);
 int pegaMultiplo(int *primos, int N, int inicio);
@@ -13,10 +13,6 @@ int main(int argc, char const *argv[])
     scanf("%d", &N);
     primos = malloc(sizeof *primos * (N + 1));
     crivo(primos, N);
-    // for (int i = 0; i <= N; i++ )
-    // {
-    //     printf("[%d] = %d\n", i, primos[i]);
-    // }
     printf("%d", contPrimos(primos, N));
     free(primos);
     return 0;
@@ -34,7 +30,7 @@ void crivo(int *primos, int N)
     primos[1] = 0;
     multiplo = pegaMultiplo(primos, N, 0);
 
-    while (maior > pow(multiplo, 2))
+    while (maior > multiplo * multiplo)
     {
         for (int i = multiplo; i <= N; i += multiplo)
         {
