@@ -40,11 +40,16 @@ void lista_remover(Lista *lista, int pos)
 
 void main(int argc, char const *argv[])
 {
+    int valor;
     Lista *lista = malloc(sizeof(Lista));
     lista->capacidade = 1;
     lista->tamanho = 1;
     lista->dados = malloc(lista->capacidade * sizeof(int));
     
+    while(1) {
+        scanf("%d", valor);
+        lista_inserir(lista, )
+    }
 
     lista_inserir(lista, lista->capacidade, 3);
 }
