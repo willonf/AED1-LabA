@@ -10,6 +10,7 @@ int main(int argc, char const **argv)
         sscanf(argv[i], "%d", &aux);
         ac += aux;
     }
-    printf("Soma = %d\n", aux);
+    printf("Soma = %d\n", ac);
+    printf("argv[0] = %s\n", argv[0]);
     return 0;
 }
