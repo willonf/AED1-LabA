@@ -1,21 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 int main(int argc, char const *argv[])
 {
-    int N;
+    int N, i = 0, pos = 0;
     int tam;
     char *vetor, carac;
+    char *vetorAux;
+
     scanf("%d", &N);
+
     vetor = malloc((N + 1) * sizeof(char));
-    tam = N + 1;
+    vetorAux = malloc((N + 1) * sizeof(char));
+    getchar();
 
-    scanf("%s*%c\n]", &vetor);
+    while (pos < N + 1)
+    {
+        carac = getchar();
+        if (carac != ' ')
+        {
+            vetor[pos] = carac;
+            pos++;
+        }
+    }
+    // printf("Pos = %d", pos);
 
-    // for (int i = N+1; i >= 0; i--)
-    // {
-    printf("%s", vetor);
-    // }
+    int len = strlen(vetor);
+
+    for (int i = len - 2; i >= 0; i--)
+    {
+        printf("%c", vetor[i]);
+    }
+
     return 0;
 }
