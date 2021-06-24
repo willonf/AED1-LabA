@@ -9,34 +9,23 @@ typedef struct lista
     int capacidade;
 } Lista;
 
-// void lista_inserir(Lista *lista, int pos, int novo)
-// {
-//     lista->capacidade++;
-//     lista->dados = realloc(lista->dados, (lista->capacidade) * sizeof(int));
-//     for (int i = lista->tamanho; i >= pos; i--)
-//     {
-//         lista->dados[i] = lista->dados[i - 1];
-//     }
-//     lista->dados[pos] = novo;
-//     lista->tamanho++;
-// }
-void lista_inserir_final(Lista *lista, int novo){
-    int last;
-    
+void lista_inserir_final(Lista *lista, int novo)
+{
+    int last, pos = 0;
     lista->tamanho++;
-    last = lista->tamanho - 1;
-    if(lista->tamanho > lista->capacidade){
+    if (lista->tamanho > lista->capacidade)
+    {
         lista->capacidade++;
         lista->dados = realloc(lista->dados, (lista->capacidade) * sizeof(int));
     }
+    last = lista->tamanho - 1;
     lista->dados[last] = novo;
-
 }
 
 void main(int argc, char const *argv[])
 {
     int valor;
-    int existe;
+    bool existe;
     Lista *lista = malloc(sizeof(Lista));
     lista->capacidade = 10;
     lista->tamanho = 0;
@@ -51,40 +40,45 @@ void main(int argc, char const *argv[])
         }
         lista_inserir_final(lista, valor);
     }
+    if (!lista->tamanho)
+    {
+        exit(1);
+    }
+
     while (true)
     {
-        pos = 0;
-        existe = -1;
+        existe = false;
         scanf("%d", &valor);
         if (!valor)
         {
             exit(1);
         }
-        while (pos <= lista->tamanho - 1)
+        for (int i = 0; i < lista->tamanho; i++)
         {
-            if (valor == lista->dados[pos])
+            // printf("Valor atual: %d - Valor lido = %d\n", lista->dados[i], valor);
+            if (lista->dados[i] == valor)
             {
-                existe = pos;
-                break;
+                existe = true;
+                if (i == 0 || lista->dados[lista->tamanho - 1] == valor)
+                {
+                    printf("%d: inicio\n", valor);
+                    break;
+                }
+                else if (i == lista->tamanho - 1)
+                {
+                    printf("%d: fim\n", valor);
+                    break;
+                }
+                else
+                {
+                    printf("%d: existe\n", valor);
+                    break;
+                }
             }
-            pos++;
         }
-        if (existe == 0)
+        if (!existe)
         {
-            printf("%d: fim", valor);
+            printf("%d: nao existe\n", valor);
         }
-        else if (existe == lista->tamanho - 1)
-        {
-            printf("%d: inicio", valor);
-        }
-        else if (existe > 0 && existe < lista->tamanho - 1)
-        {
-            printf("%d: existe", valor);
-        }
-        else if (existe < 0)
-        {
-            printf("%d: nao existe", valor);
-        }
-        printf("\n");
     }
 }
