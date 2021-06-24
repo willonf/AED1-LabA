@@ -9,16 +9,28 @@ typedef struct lista
     int capacidade;
 } Lista;
 
-void lista_inserir(Lista *lista, int pos, int novo)
-{
-    lista->capacidade++;
-    lista->dados = realloc(lista->dados, (lista->capacidade) * sizeof(int));
-    // for (int i = lista->tamanho; i >= pos; i--)
-    // {
-    //     lista->dados[i] = lista->dados[i - 1];
-    // }
-    lista->dados[pos] = novo;
+// void lista_inserir(Lista *lista, int pos, int novo)
+// {
+//     lista->capacidade++;
+//     lista->dados = realloc(lista->dados, (lista->capacidade) * sizeof(int));
+//     for (int i = lista->tamanho; i >= pos; i--)
+//     {
+//         lista->dados[i] = lista->dados[i - 1];
+//     }
+//     lista->dados[pos] = novo;
+//     lista->tamanho++;
+// }
+void lista_inserir_final(Lista *lista, int novo){
+    int last;
+    
     lista->tamanho++;
+    last = lista->tamanho - 1;
+    if(lista->tamanho > lista->capacidade){
+        lista->capacidade++;
+        lista->dados = realloc(lista->dados, (lista->capacidade) * sizeof(int));
+    }
+    lista->dados[last] = novo;
+
 }
 
 void main(int argc, char const *argv[])
@@ -37,8 +49,7 @@ void main(int argc, char const *argv[])
         {
             break;
         }
-        lista_inserir(lista, pos, valor);
-        pos++;
+        lista_inserir_final(lista, valor);
     }
     while (true)
     {
