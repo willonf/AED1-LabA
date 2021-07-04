@@ -43,11 +43,12 @@ void insert(List *list, int value)
 int comprimento(List *l)
 {
     int length = 0;
-    while (l->prim)
+      for (Node *aux = l->prim; aux!=NULL ; aux = aux->prox)
     {
         length++;
-        l->prim = l->prim->prox;
     }
+    
+
     return length;
 }
 

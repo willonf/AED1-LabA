@@ -72,29 +72,29 @@ void mostrarLista(List list)
     }
 }
 
+bool buscarElemento(List lista, int x)
+{
+    List aux = lista;
+    while (lista.prim)
+    {
+        if (lista.prim->data.number == x)
+        {
+            return true;
+        }
+        lista.prim = lista.prim->prox;
+    }
+    return false;
+}
+
 void retira_n(List *l, int x)
 {
-    Node *aux, *ant;
-    if (l->prim)
+    for (Node *atual = l->prim; atual != NULL; atual = atual->prox)
     {
-        aux = l->prim;
-        if (l->prim->data.number == x)
-        {
-            l->prim = aux->prox;
-            free(aux);
-        }
-    } else {
-        ant = l->prim;
-        aux = l->prim;
-        while(aux) {
-            if(aux->data.number == x){
-                ant->prox = aux->prox;
-                free(aux);
-            }
-            ant = aux;
-            aux = aux->prox;
+        if (buscarElemento(*l, x)){
+            atual = atual->prox;    
         }
     }
+    
 }
 
 void main()
