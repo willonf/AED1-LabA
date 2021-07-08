@@ -57,7 +57,6 @@ int fila_retira(Fila *f)
     {
         f->fim = NULL;
     }
-    printf("Retirando %d\n", v);
     free(aux);
     return v;
 }
@@ -94,14 +93,14 @@ int main()
     Fila *filaAlunos = fila_cria();
     int tempoSessao, tempo, tempoTotal = 0;
 
-    // scanf("%d", &tempoSessao);
-    tempoSessao = 20;
-    // while (scanf("%d", &tempo) != EOF)
-    // {
-    //     fila_insere(filaAlunos, tempo);
-    // }
-    fila_insere(filaAlunos, 10);
-    fila_insere(filaAlunos, 25);
+    scanf("%d", &tempoSessao);
+    // tempoSessao = 20;
+    while (scanf("%d", &tempo) != EOF)
+    {
+        fila_insere(filaAlunos, tempo);
+    }
+    // fila_insere(filaAlunos, 10);
+    // fila_insere(filaAlunos, 25);
 
     FilaNo *aux = filaAlunos->inicio;
     while (true)
@@ -119,11 +118,17 @@ int main()
         }
         else if (aux->tempo <= tempoSessao)
         {
-            tmp = fila_retira(filaAlunos);
-            tempoTotal += tempoSessao;
+            if (filaAlunos->inicio == filaAlunos->fim)
+            {
+                tmp = fila_retira(filaAlunos);
+                tempoTotal += (tmp);
+            }else {
+               tmp = fila_retira(filaAlunos);
+                tempoTotal += tempoSessao; 
+            }
         }
           aux = filaAlunos->inicio;
     }
-    printf("Tempo total: %d\n", tempoTotal);
+    printf("%d", tempoTotal);
     fila_libera(filaAlunos);
 }
