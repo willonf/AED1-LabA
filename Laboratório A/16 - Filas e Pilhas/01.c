@@ -89,16 +89,19 @@ void fila_imprime(Fila *f)
     }
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
     Fila *filaAlunos = fila_cria();
     int tempoSessao, tempo, tempoTotal = 0;
 
-    scanf("%d", &tempoSessao);
-    while (scanf("%d", &tempo) != EOF)
-    {
-        fila_insere(filaAlunos, tempo);
-    }
+    // scanf("%d", &tempoSessao);
+    tempoSessao = 20;
+    // while (scanf("%d", &tempo) != EOF)
+    // {
+    //     fila_insere(filaAlunos, tempo);
+    // }
+    fila_insere(filaAlunos, 10);
+    fila_insere(filaAlunos, 25);
 
     FilaNo *aux = filaAlunos->inicio;
     while (true)
@@ -119,9 +122,8 @@ int main(int argc, char const *argv[])
             tmp = fila_retira(filaAlunos);
             tempoTotal += tempoSessao;
         }
-        aux = aux->prox;
+          aux = filaAlunos->inicio;
     }
-    printf("%d", tempo);
+    printf("Tempo total: %d\n", tempoTotal);
     fila_libera(filaAlunos);
-    return 0;
 }
