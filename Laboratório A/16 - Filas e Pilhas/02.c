@@ -131,8 +131,12 @@ int main(void)
     char entrada[100];
     bool balanceada;
     int parent = 0, colch = 0, chaves = 0;
-    while (scanf("%s", entrada) != EOF)
+    while ( true)
     {
+        scanf("%s", entrada);
+        if(strcmp(entrada, "###") == 0){
+            break;
+        }
         Pilha *minhaPilha = cria_pilha();
         balanceada = ehBalanceada(minhaPilha, entrada);
         if (balanceada)
