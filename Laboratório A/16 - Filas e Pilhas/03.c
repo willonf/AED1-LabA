@@ -35,7 +35,7 @@ void lista_inserir_inicio(Lista *lista, double novo)
 	if (lista->tamanho > lista->capacidade)
 	{
 		lista->capacidade++;
-		lista->dados = realloc(lista->dados, (lista->capacidade) * sizeof(int));
+		lista->dados = realloc(lista->dados, (lista->tamanho) * sizeof(int));
 	}
 	last = lista->tamanho - 1;
 	for (int i = last; i >= 0; i--)
@@ -96,33 +96,33 @@ int main(void)
 				case '#':
 					op1 = lista_desempilha(minhaLista);
 					op2 = lista_desempilha(minhaLista);
-					// printf("Soma: %.2f + %.2f = %.2f\n", op2, op1, op2 + op1);
+					// printf("%.2f\n", op2 + op1);
 					lista_inserir_inicio(minhaLista, op2 + op1);
 					break;
 				case '-':
 					op1 = lista_desempilha(minhaLista);
 					op2 = lista_desempilha(minhaLista);
-					// printf("Sub: %.2f - %.2f = %.2f\n", op2, op1, op2 - op1);
+					// printf("%.2f\n", op2 - op1);
 					lista_inserir_inicio(minhaLista, op2 - op1);
 					break;
 				case '*':
 					op1 = lista_desempilha(minhaLista);
 					op2 = lista_desempilha(minhaLista);
-					// printf("Prod: %.2f x %.2f = %.2f\n", op2, op1, op2 * op1);
+					// printf("%.2f\n", op2 * op1);
 					lista_inserir_inicio(minhaLista, op2 * op1);
 					break;
 				case '/':
 					op1 = lista_desempilha(minhaLista);
 					op2 = lista_desempilha(minhaLista);
-					// printf("Div: %.2f / %.2f = %.2f\n", op2, op1, op2 / op1);
+					// printf("%.2f\n", op2 / op1);
 					lista_inserir_inicio(minhaLista, op2 / op1);
 					break;
 				}
 			}
 		}
-		imprimir_lista(minhaLista);
 		// Fim da expressão
 		num_casos--;
+	imprimir_lista(minhaLista);
 	}
 	liberar_lista(minhaLista);
 }
