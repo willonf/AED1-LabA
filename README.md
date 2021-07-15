@@ -1,2 +1,2 @@
-# AED1-LabA
-Repositório dos exercícios das disciplinas Algoritmos e Estruturas de Dados 1 e Laboratório A
+# Ufam - Engenharia de Software 
+Repositório dos exercícios realizado nas diversas disciplinas do curso de Engenharia de Software da Universidade Federal do Amazonas.
