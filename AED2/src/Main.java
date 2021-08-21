@@ -1,4 +1,4 @@
-import lists.ListaVetor;
+import listas.ListaVetor;
 
 public class Main {
     public static void main(String[] args) {

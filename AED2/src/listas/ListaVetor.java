@@ -1,4 +1,4 @@
-package lists;
+package listas;
 
 public class ListaVetor {
     private Object[] dados;
