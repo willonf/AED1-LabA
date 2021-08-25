@@ -7,6 +7,7 @@
 *.obj
 *.elf
 *.json
+*.iml
 
 # Linker output
 *.ilk
@@ -55,4 +56,5 @@ dkms.conf
 
 #Directories
 .vscode/
+.idea
 out
