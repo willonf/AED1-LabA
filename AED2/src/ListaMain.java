@@ -1,7 +1,7 @@
 import listas.ListaDuplamenteEncadeada;
 import listas.No2;
 
-public class Main {
+public class ListaMain {
 
     public static void main(String[] args) {
         ListaDuplamenteEncadeada lista = new ListaDuplamenteEncadeada();
@@ -22,6 +22,8 @@ public class Main {
         System.out.println(lista.get(1));
         System.out.println("+====+++=====INVERSO+++=====++");
         lista.imprimeInverso();
+        lista.limpa();
+        lista2.limpa();
     }
 }
 
