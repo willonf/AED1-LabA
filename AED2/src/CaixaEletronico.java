@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class CaixaEletronico  {
+public class CaixaEletronico {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         double value;
@@ -15,6 +15,5 @@ public class CaixaEletronico  {
         qt10 = (int) (value % 50) / 10;
         qt2 = (int) (((value % 50) % 10) / 2);
         System.out.printf("%d notas de R$50, %d notas de R$10 e %d notas de R$2", qt50, qt10, qt2);
-
     }
 }
