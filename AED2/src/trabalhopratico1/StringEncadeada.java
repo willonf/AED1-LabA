@@ -63,7 +63,6 @@ public class StringEncadeada {
             this.cauda = newChar;
         }
         this.tamanho++;
-
     }
 
     public boolean isEmpty() {
@@ -95,7 +94,7 @@ public class StringEncadeada {
         return index;
     }
 
-    public boolean equals(Object str) {
+    public boolean equals(String str) {
         return true;
     }
 
@@ -115,7 +114,7 @@ public class StringEncadeada {
     }
 
     public void toStr() {
-        StringBuilder result = new StringBuilder("");
+        StringBuilder result = new StringBuilder();
         for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
             System.out.println(noAtual.getCaractere());
         }
