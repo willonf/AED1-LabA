@@ -3,14 +3,22 @@ import trabalhopratico1.StringEncadeada;
 public class ListaMain {
 
     public static void main(String[] args) {
-        StringEncadeada world8  = new StringEncadeada("Omicron Persei 8");
-//        StringEncadeada world9  = new StringEncadeada("Amphibios 9");
-//        StringEncadeada world10 = new StringEncadeada("Decapod 10");
-//        StringEncadeada world11 = new StringEncadeada(new char[]{'W', 'i', 'l'});
-//        StringEncadeada world11 = new StringEncadeada(new StringEncadeada("Willon"));
-//        System.out.println(world8.getTopo().getCaractere());
-//        System.out.println(world8.getCauda().getCaractere());
-        System.out.println(world8.charAt(3));;
+        StringEncadeada word1 = new StringEncadeada(new StringEncadeada(new char[]{'T', 'e', 's', 't', 'e', '1'}));
+        StringEncadeada word2 = new StringEncadeada(new StringEncadeada("Teste2"));
+        StringEncadeada word3 = new StringEncadeada(new StringEncadeada(new StringEncadeada("Teste3")));
+        StringEncadeada word4 = new StringEncadeada(new StringEncadeada(new StringEncadeada(new char[]{'T', 'e', 's', 't', 'e','4'})));
+//        System.out.println(word2.getTopo());
+//        System.out.println(word2.getCauda());
+        word2.insereInicio('W');
+        word2.insereFim('W');
+//        System.out.println(word2.isEmpty());
+//        System.out.println(word2.length());
+//        System.out.println(word2.charAt(1));
+//        System.out.println(word2.indexOf('e'));
+//        System.out.println(word2.equals("Willon"));
+//        word2.concat(word1);
+        System.out.println(word2.toString());
+
     }
 }
 

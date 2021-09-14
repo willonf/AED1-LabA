@@ -10,7 +10,7 @@ public class StringNo {
     }
 
     public char getCaractere() {
-        return this.caractere;
+        return caractere;
     }
 
     public void setCaractere(char caractere) {
@@ -18,7 +18,7 @@ public class StringNo {
     }
 
     public StringNo getAnt() {
-        return this.ant;
+        return ant;
     }
 
     public void setAnt(StringNo ant) {
@@ -26,7 +26,7 @@ public class StringNo {
     }
 
     public StringNo getProx() {
-        return this.prox;
+        return prox;
     }
 
     public void setProx(StringNo prox) {
