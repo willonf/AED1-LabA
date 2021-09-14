@@ -66,7 +66,6 @@ public class StringEncadeada {
             temp.setProx(newChar);
             this.cauda = newChar;
         }
-//        this.topo = newChar;
         this.tamanho++;
     }
 
@@ -92,6 +91,7 @@ public class StringEncadeada {
 
     public int indexOf(int ch) {
         int index = 0;
+        int result;
         boolean contains = false;
         for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
             if (noAtual.getCaractere() == ch) {
@@ -99,15 +99,20 @@ public class StringEncadeada {
             }
             index++;
         }
-        return index;
+        if (index == this.length()){
+            return -1;
+        } else{
+            return index;
+        }
     }
 
-    public boolean equals(StringEncadeada str) {
+    public boolean equals(Object str) {
         boolean isEqual = true;
-        if (str.length() != this.length()) {
+        StringEncadeada anotherString = new StringEncadeada(str.toString());
+        if (anotherString.length() != this.length()) {
             isEqual = false;
         }
-        StringNo paramStr = str.getTopo();
+        StringNo paramStr = anotherString.getTopo();
         for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
             if (noAtual.getCaractere() != paramStr.getCaractere()) {
                 isEqual = false;
@@ -135,11 +140,12 @@ public class StringEncadeada {
 
     public int compareTo(StringEncadeada anotherString) {
         StringNo paramStr = anotherString.getTopo();
-        int result = 0;
+        int result = this.length() - anotherString.length();
         for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
             if(noAtual.getCaractere() != paramStr.getCaractere()){
-                result = noAtual.getCaractere() - paramStr.getCaractere();
+                return (noAtual.getCaractere() - paramStr.getCaractere());
             }
+            paramStr = paramStr.getProx();
         }
         return result;
 
