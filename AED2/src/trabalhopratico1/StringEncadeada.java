@@ -13,7 +13,6 @@ public class StringEncadeada {
     }
 
     public StringEncadeada(String conteudo) {
-        StringEncadeada str = new StringEncadeada();
         for (int i = 0; i < conteudo.length(); i++) {
             this.insereFim(conteudo.charAt(i));
         }
@@ -58,14 +57,13 @@ public class StringEncadeada {
 
         if (this.getTopo() == null) {
             this.topo = newChar;
-            this.cauda = newChar;
         } else {
             StringNo temp;
             temp = this.cauda;
             newChar.setAnt(temp);
             temp.setProx(newChar);
-            this.cauda = newChar;
         }
+        this.cauda = newChar;
         this.tamanho++;
     }
 
@@ -91,17 +89,15 @@ public class StringEncadeada {
 
     public int indexOf(int ch) {
         int index = 0;
-        int result;
-        boolean contains = false;
         for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
             if (noAtual.getCaractere() == ch) {
                 break;
             }
             index++;
         }
-        if (index == this.length()){
+        if (index == this.length()) {
             return -1;
-        } else{
+        } else {
             return index;
         }
     }
@@ -124,17 +120,22 @@ public class StringEncadeada {
     }
 
     public void concat(StringEncadeada str) {
-        this.cauda.setProx(str.getTopo());
-        this.cauda = str.cauda;
-        str.topo.setAnt(this.cauda.getAnt());
-        this.tamanho = this.length() + str.tamanho;
+        if (str.isEmpty()) {
+            return;
+        } else {
+
+            str.topo.setAnt(this.cauda);
+            this.cauda.setProx(str.getTopo());
+            this.cauda = str.cauda;
+            this.tamanho = this.length() + str.length();
+        }
     }
 
     public void replace(char oldChar, char newChar) {
         for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
-           if (noAtual.getCaractere() == oldChar){
-               noAtual.setCaractere(newChar);
-           }
+            if (noAtual.getCaractere() == oldChar) {
+                noAtual.setCaractere(newChar);
+            }
         }
     }
 
@@ -142,7 +143,7 @@ public class StringEncadeada {
         StringNo paramStr = anotherString.getTopo();
         int result = this.length() - anotherString.length();
         for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
-            if(noAtual.getCaractere() != paramStr.getCaractere()){
+            if (noAtual.getCaractere() != paramStr.getCaractere()) {
                 return (noAtual.getCaractere() - paramStr.getCaractere());
             }
             paramStr = paramStr.getProx();
@@ -153,9 +154,7 @@ public class StringEncadeada {
 
     public String toString() {
         String result = "";
-        int num = 0;
         for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
-//            System.out.print(noAtual.getCaractere());
             result = result + noAtual.getCaractere();
         }
         return result;
