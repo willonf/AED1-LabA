@@ -94,14 +94,28 @@ public class StringEncadeada {
         int index = 0;
         boolean contains = false;
         for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
-            System.out.println(noAtual.getCaractere());
+            if (noAtual.getCaractere() == ch) {
+                break;
+            }
             index++;
         }
         return index;
     }
 
-    public boolean equals(String str) {
-        return true;
+    public boolean equals(StringEncadeada str) {
+        boolean isEqual = true;
+        if (str.length() != this.length()) {
+            isEqual = false;
+        }
+        StringNo paramStr = str.getTopo();
+        for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
+            if (noAtual.getCaractere() != paramStr.getCaractere()) {
+                isEqual = false;
+                break;
+            }
+            paramStr = paramStr.getProx();
+        }
+        return isEqual;
     }
 
     public void concat(StringEncadeada str) {
@@ -112,11 +126,23 @@ public class StringEncadeada {
     }
 
     public void replace(char oldChar, char newChar) {
-
+        for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
+           if (noAtual.getCaractere() == oldChar){
+               noAtual.setCaractere(newChar);
+           }
+        }
     }
 
     public int compareTo(StringEncadeada anotherString) {
-        return 1;
+        StringNo paramStr = anotherString.getTopo();
+        int result = 0;
+        for (StringNo noAtual = this.getTopo(); noAtual != null; noAtual = noAtual.getProx()) {
+            if(noAtual.getCaractere() != paramStr.getCaractere()){
+                result = noAtual.getCaractere() - paramStr.getCaractere();
+            }
+        }
+        return result;
+
     }
 
     public String toString() {
