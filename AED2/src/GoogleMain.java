@@ -1,6 +1,6 @@
 import hashtables.CacheRotas;
 
-public class CacheMain {
+public class GoogleMain {
 
     public static void main(String[] args) {
         CacheRotas c = new CacheRotas(20);
