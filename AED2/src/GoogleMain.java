@@ -6,7 +6,9 @@ public class GoogleMain {
     public static void main(String[] args) {
         ListaInvertida l = new ListaInvertida(10);
         l.rehash(20);
-        System.out.println(l.toString());
+        l = new ListaInvertida(10);
+        l.insere("force", "TheJediPath.pdf");
+        System.out.println(l.cargaUtilizacao());
     }
 }
 

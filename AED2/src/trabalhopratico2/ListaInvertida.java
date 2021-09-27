@@ -65,11 +65,13 @@ public class ListaInvertida {
             return 0.0;
         }
         for (int i = 0; i < this.getTabela().length; i++) {
+            if(this.getTabela()[i] != null){
+                continue;
+            }
             if (this.getTabela()[i].getDocumentosTopo() != null) {
                 count++;
             }
         }
-//        return ((double) this.tamanho() / this.getTabela().length) * 100;
         return ((double) count / this.getTabela().length) * 100;
     }
 
@@ -98,7 +100,6 @@ public class ListaInvertida {
 
     public void rehash(int novoTamanho) {
         PalavraNo[] tabelaNova = new PalavraNo[novoTamanho];
-//        for (PalavraNo palavra : this.getTabela()) { // palavra é null
         for (int i = 0; i < this.getTabela().length; i++) {
             PalavraNo palavra = this.getTabela()[i];
             int soma = 0;
@@ -110,17 +111,21 @@ public class ListaInvertida {
             }
             tabelaNova[soma % tabelaNova.length] = palavra;
         }
-//        }
         this.tabela = tabelaNova;
     }
 
     @Override
     public String toString() {
         String result = "";
+
+        if(this.getTabela() != null){
+            return "";
+        }
+
         for (int i = 0; i < this.getTabela().length; i++) {
             String prefix = "[Indice ".concat(String.valueOf(i)).concat("] ");
 
-            if (this.getTabela() != null && this.getTabela()[i].getDocumentosTopo() != null){
+            if (this.getTabela()[i].getDocumentosTopo() != null){
                 for (PalavraNo word = this.getTabela()[i]; word != null; word = word.getProx()) {
                     result = result.concat(prefix).concat(word.toString());
                 }
