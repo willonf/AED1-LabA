@@ -3,7 +3,7 @@ package trabalhopratico2;
 public class PalavraNo {
     private String palavra;
     private DocumentoNo documentosTopo;
-    private int documentosTamanho;
+    private int documentosTamanho = 0;
     private PalavraNo prox;
 
     public PalavraNo(String palavra, String documento) {

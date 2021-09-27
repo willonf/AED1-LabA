@@ -2,7 +2,7 @@ package trabalhopratico2;
 
 public class ListaInvertida {
     private PalavraNo[] tabela;
-    private int tamanho;
+    private int tamanho = 0;
     private int colisoes = 0;
 
     public ListaInvertida(int maxTam) {
@@ -12,6 +12,7 @@ public class ListaInvertida {
     public int tamanho() {
         return this.tamanho;
     }
+
 
     public PalavraNo[] getTabela() {
         return tabela;
@@ -59,13 +60,17 @@ public class ListaInvertida {
     }
 
     public double cargaUtilizacao() {
-//        int count = 0;
-//        for (int i = 0; i < this.getTabela().length; i++) {
-//            if(tabela[i] != null){
-//                count++;
-//            }
-//        }
-        return ((double) this.tamanho() / this.getTabela().length) * 100;
+        int count = 0;
+        if (this.tamanho() == 0) {
+            return 0.0;
+        }
+        for (int i = 0; i < this.getTabela().length; i++) {
+            if (this.getTabela()[i].getDocumentosTopo() != null) {
+                count++;
+            }
+        }
+//        return ((double) this.tamanho() / this.getTabela().length) * 100;
+        return ((double) count / this.getTabela().length) * 100;
     }
 
     public int getNumColisoes() {
@@ -79,6 +84,9 @@ public class ListaInvertida {
     public double tamanhoMedioListas() {
         int sum = 0;
         double result;
+        if (this.tamanho() == 0) {
+            return 0.0;
+        }
         for (int i = 0; i < this.getTabela().length; i++) {
             if (this.getTabela()[i].getDocumentosTopo() != null) {
                 sum += this.getTabela()[i].getDocumentosTamanho();
@@ -90,22 +98,29 @@ public class ListaInvertida {
 
     public void rehash(int novoTamanho) {
         PalavraNo[] tabelaNova = new PalavraNo[novoTamanho];
-        for (PalavraNo palavra : this.getTabela()) {
+//        for (PalavraNo palavra : this.getTabela()) { // palavra é null
+        for (int i = 0; i < this.getTabela().length; i++) {
+            PalavraNo palavra = this.getTabela()[i];
             int soma = 0;
-            for (int i = 0; i < palavra.getPalavra().length(); i++) {
-                soma += palavra.getPalavra().charAt(i);
+            if (palavra == null || palavra.getDocumentosTamanho() == 0) {
+                continue;
+            }
+            for (int j = 0; j < palavra.getPalavra().length(); j++) {
+                soma += palavra.getPalavra().charAt(j);
             }
             tabelaNova[soma % tabelaNova.length] = palavra;
         }
+//        }
         this.tabela = tabelaNova;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         for (int i = 0; i < this.getTabela().length; i++) {
-            String prefix = "[Indice".concat(String.valueOf(i)).concat("] ");
-            if (this.getTabela()[i].getDocumentosTopo() != null) {
+            String prefix = "[Indice ".concat(String.valueOf(i)).concat("] ");
+
+            if (this.getTabela() != null && this.getTabela()[i].getDocumentosTopo() != null){
                 for (PalavraNo word = this.getTabela()[i]; word != null; word = word.getProx()) {
                     result = result.concat(prefix).concat(word.toString());
                 }
