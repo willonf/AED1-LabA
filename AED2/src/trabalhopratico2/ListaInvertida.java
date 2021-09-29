@@ -43,9 +43,11 @@ public class ListaInvertida {
 
         PalavraNo result = this.busca(palavra);
         if (result != null) {
-            this.setNumColisoes(this.getNumColisoes() + 1);
-            if (result.buscaDocumento(documento) != null) {
-                result.insereDocumento(documento);
+            if (result.buscaDocumento(documento) == null) {
+                boolean inserido = result.insereDocumento(documento);
+                if (!inserido) {
+                    this.setNumColisoes(this.getNumColisoes() + 1);
+                }
                 return true;
             }
             return false;
@@ -65,7 +67,7 @@ public class ListaInvertida {
             return 0.0;
         }
         for (int i = 0; i < this.getTabela().length; i++) {
-            if(this.getTabela()[i] != null){
+            if (this.getTabela()[i] == null) {
                 continue;
             }
             if (this.getTabela()[i].getDocumentosTopo() != null) {
@@ -86,10 +88,16 @@ public class ListaInvertida {
     public double tamanhoMedioListas() {
         int sum = 0;
         double result;
+        int count = 0;
         if (this.tamanho() == 0) {
             return 0.0;
         }
         for (int i = 0; i < this.getTabela().length; i++) {
+
+            if (this.getTabela()[i] == null) {
+                continue;
+            }
+            count++;
             if (this.getTabela()[i].getDocumentosTopo() != null) {
                 sum += this.getTabela()[i].getDocumentosTamanho();
             }
@@ -111,6 +119,7 @@ public class ListaInvertida {
             }
             tabelaNova[soma % tabelaNova.length] = palavra;
         }
+        this.setNumColisoes(0);
         this.tabela = tabelaNova;
     }
 
@@ -118,14 +127,14 @@ public class ListaInvertida {
     public String toString() {
         String result = "";
 
-        if(this.getTabela() != null){
+        if (this.getTabela() != null) {
             return "";
         }
 
         for (int i = 0; i < this.getTabela().length; i++) {
             String prefix = "[Indice ".concat(String.valueOf(i)).concat("] ");
 
-            if (this.getTabela()[i].getDocumentosTopo() != null){
+            if (this.getTabela()[i].getDocumentosTopo() != null) {
                 for (PalavraNo word = this.getTabela()[i]; word != null; word = word.getProx()) {
                     result = result.concat(prefix).concat(word.toString());
                 }

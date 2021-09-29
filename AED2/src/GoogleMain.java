@@ -8,7 +8,11 @@ public class GoogleMain {
         l.rehash(20);
         l = new ListaInvertida(10);
         l.insere("force", "TheJediPath.pdf");
-        System.out.println(l.cargaUtilizacao());
+        l.rehash(20);
+        l.insere("force", "TheJediPath.pdf");
+        l.insere("force", "WaysOfTheForce.pdf");
+        System.out.println(l.tamanhoMedioListas());
+
     }
 }
 
