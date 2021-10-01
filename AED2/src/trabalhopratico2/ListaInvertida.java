@@ -44,15 +44,15 @@ public class ListaInvertida {
         PalavraNo result = this.busca(palavra);
         if (result != null) {
             if (result.buscaDocumento(documento) == null) {
-                boolean inserido = result.insereDocumento(documento);
-                if (!inserido) {
-                    this.setNumColisoes(this.getNumColisoes() + 1);
-                }
+                result.insereDocumento(documento);
                 return true;
             }
             return false;
         } else {
             int indice = this.funcaoHash(palavra);
+            if(this.getTabela()[indice] != null){
+                this.setNumColisoes(this.getNumColisoes() + 1);
+            }
             PalavraNo topo = this.tabela[indice];
             this.tabela[indice] = new PalavraNo(palavra, documento);
             this.tabela[indice].setProx(topo);

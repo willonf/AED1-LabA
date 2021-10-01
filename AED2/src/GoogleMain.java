@@ -4,13 +4,15 @@ public class GoogleMain {
 
     public static void main(String[] args) {
         ListaInvertida l = new ListaInvertida(10);
-        l.rehash(20);
-        l = new ListaInvertida(10);
-        l.insere("force", "TheJediPath.pdf");
-        l.rehash(20);
-        l.insere("force", "TheJediPath.pdf");
-        l.insere("jed", "TheReturnOfJedi.pdf");
-        System.out.println(l.getNumColisoes());
+//        l.rehash(20);
+//        l = new ListaInvertida(10);
+//        l.insere("force", "TheJediPath.pdf");
+//        l.rehash(20);
+//        l.insere("force", "TheJediPath.pdf");
+//        l.insere("jed", "TheReturnOfJedi.pdf");
+        System.out.println(l.funcaoHash("jed"));
+        System.out.println(l.funcaoHash("force"));
+//        System.out.println(l.getNumColisoes());
     }
 }
 
