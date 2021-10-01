@@ -1,5 +1,4 @@
 import trabalhopratico2.ListaInvertida;
-import trabalhopratico2.PalavraNo;
 
 public class GoogleMain {
 
@@ -10,10 +9,8 @@ public class GoogleMain {
         l.insere("force", "TheJediPath.pdf");
         l.rehash(20);
         l.insere("force", "TheJediPath.pdf");
-        l.insere("force", "WaysOfTheForce.pdf");
-        l.insere("jedi", "TheReturnogJedi.pdf");
-        System.out.println(l.tamanhoMedioListas());
-        System.out.println(l.toString());
+        l.insere("jed", "TheReturnOfJedi.pdf");
+        System.out.println(l.getNumColisoes());
     }
 }
 
