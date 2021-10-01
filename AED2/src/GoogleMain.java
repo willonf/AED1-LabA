@@ -11,8 +11,9 @@ public class GoogleMain {
         l.rehash(20);
         l.insere("force", "TheJediPath.pdf");
         l.insere("force", "WaysOfTheForce.pdf");
+        l.insere("jedi", "TheReturnogJedi.pdf");
         System.out.println(l.tamanhoMedioListas());
-
+        System.out.println(l.toString());
     }
 }
 

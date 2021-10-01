@@ -94,15 +94,13 @@ public class ListaInvertida {
         }
         for (int i = 0; i < this.getTabela().length; i++) {
 
-            if (this.getTabela()[i] == null) {
-                continue;
-            }
-            count++;
-            if (this.getTabela()[i].getDocumentosTopo() != null) {
-                sum += this.getTabela()[i].getDocumentosTamanho();
+            if (this.getTabela()[i] != null) {
+                for(PalavraNo palavra = this.getTabela()[i]; palavra != null; palavra = palavra.getProx()){
+                    count++;
+                }
             }
         }
-        result = ((double) sum) / this.tamanho();
+        result = ((double) count) / this.tamanho();
         return result;
     }
 
@@ -127,18 +125,20 @@ public class ListaInvertida {
     public String toString() {
         String result = "";
 
-        if (this.getTabela() != null) {
+        if (this.getTabela().length  == 0) {
             return "";
         }
 
         for (int i = 0; i < this.getTabela().length; i++) {
             String prefix = "[Indice ".concat(String.valueOf(i)).concat("] ");
 
-            if (this.getTabela()[i].getDocumentosTopo() != null) {
-                for (PalavraNo word = this.getTabela()[i]; word != null; word = word.getProx()) {
-                    result = result.concat(prefix).concat(word.toString());
+            if(this.getTabela()[i] != null) {
+                if (this.getTabela()[i].getDocumentosTopo() != null) {
+                    for (PalavraNo word = this.getTabela()[i]; word != null; word = word.getProx()) {
+                        result = result.concat(prefix).concat(word.toString());
+                    }
+                    result = result.concat("\n");
                 }
-                result = result.concat("\n");
             }
         }
         return result;
