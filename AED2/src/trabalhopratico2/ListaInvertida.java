@@ -1,5 +1,10 @@
 package trabalhopratico2;
 
+import java.util.Locale;
+
+import static java.lang.Math.abs;
+import static java.lang.Math.floor;
+
 public class ListaInvertida {
     private PalavraNo[] tabela;
     private int tamanho = 0;
@@ -50,7 +55,7 @@ public class ListaInvertida {
             return false;
         } else {
             int indice = this.funcaoHash(palavra);
-            if(this.getTabela()[indice] != null){
+            if (this.getTabela()[indice] != null) {
                 this.setNumColisoes(this.getNumColisoes() + 1);
             }
             PalavraNo topo = this.tabela[indice];
@@ -96,7 +101,7 @@ public class ListaInvertida {
 
             if (this.getTabela()[i] != null) {
                 denom++;
-                for(PalavraNo palavra = this.getTabela()[i]; palavra != null; palavra = palavra.getProx()){
+                for (PalavraNo palavra = this.getTabela()[i]; palavra != null; palavra = palavra.getProx()) {
                     count++;
                 }
             }
@@ -126,14 +131,14 @@ public class ListaInvertida {
     public String toString() {
         String result = "";
 
-        if (this.getTabela().length  == 0) {
+        if (this.getTabela().length == 0) {
             return "";
         }
 
         for (int i = 0; i < this.getTabela().length; i++) {
             String prefix = "[Indice ".concat(String.valueOf(i)).concat("] ");
 
-            if(this.getTabela()[i] != null) {
+            if (this.getTabela()[i] != null) {
                 if (this.getTabela()[i].getDocumentosTopo() != null) {
                     for (PalavraNo word = this.getTabela()[i]; word != null; word = word.getProx()) {
                         result = result.concat(prefix).concat(word.toString());

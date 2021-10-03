@@ -15,6 +15,7 @@ public class GoogleMain {
         lista.insere("be", "document1.txt");
         lista.insere("with", "document1.txt");
         lista.insere("jed", "document1.txt");
+        lista.insere("masteryoda", "document1.txt");
         System.out.println(lista.tamanhoMedioListas());
         System.out.println(lista);
     }
