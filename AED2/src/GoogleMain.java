@@ -3,16 +3,20 @@ import trabalhopratico2.ListaInvertida;
 public class GoogleMain {
 
     public static void main(String[] args) {
-        ListaInvertida l = new ListaInvertida(10);
-//        l.rehash(20);
-//        l = new ListaInvertida(10);
-//        l.insere("force", "TheJediPath.pdf");
-//        l.rehash(20);
-//        l.insere("force", "TheJediPath.pdf");
-//        l.insere("jed", "TheReturnOfJedi.pdf");
-        System.out.println(l.funcaoHash("jed"));
-        System.out.println(l.funcaoHash("force"));
-//        System.out.println(l.getNumColisoes());
+        ListaInvertida lista = new ListaInvertida(6);
+        lista.insere("remember", "document1.txt");
+        lista.insere("the", "document1.txt");
+        lista.insere("the", "document2.txt");
+        lista.insere("the", "document3.txt");
+        lista.insere("force", "document1.txt");
+        lista.insere("force", "document2.txt");
+        lista.insere("force", "document3.txt");
+        lista.insere("will", "document1.txt");
+        lista.insere("be", "document1.txt");
+        lista.insere("with", "document1.txt");
+        lista.insere("jed", "document1.txt");
+        System.out.println(lista.tamanhoMedioListas());
+        System.out.println(lista);
     }
 }
 

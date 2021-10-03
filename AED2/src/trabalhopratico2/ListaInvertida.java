@@ -86,21 +86,22 @@ public class ListaInvertida {
     }
 
     public double tamanhoMedioListas() {
-        int sum = 0;
         double result;
         int count = 0;
+        int denom = 0;
         if (this.tamanho() == 0) {
-            return 0.0;
+            return 0;
         }
         for (int i = 0; i < this.getTabela().length; i++) {
 
             if (this.getTabela()[i] != null) {
+                denom++;
                 for(PalavraNo palavra = this.getTabela()[i]; palavra != null; palavra = palavra.getProx()){
                     count++;
                 }
             }
         }
-        result = ((double) count) / this.tamanho();
+        result = ((double) count) / denom;
         return result;
     }
 
