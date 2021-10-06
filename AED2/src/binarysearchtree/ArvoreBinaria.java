@@ -72,4 +72,12 @@ public class ArvoreBinaria {
         }
     }
 
+    public void caminaPreOrdem() {
+        caminhaPreOrdem(raiz);
+    }
+
+    public void caminhaPreOrdem(NoArvore subArvore) {
+
+    }
+
 }
