@@ -30,18 +30,46 @@ public class SistemaAcademico {
             } else if (matricula > noAtual.getMatricula()) {
                 noAtual = noAtual.getDireita();
             } else {
-                noAtual.setMatricula(matricula);
+                noAtual.setNome(nome);
+                noAtual.setCurso(curso);
+                noAtual.setCoeficiente(coeficiente);
                 return;
             }
         } while (noAtual != null);
 
-        NoArvore noNovo = new NoArvore(matricula, valor, noPai);
-        if (matricula < noPai.getChave()) {
+        NoAluno noNovo = new NoAluno(matricula, nome, curso, coeficiente, noPai);
+        if (matricula < noPai.getMatricula()) {
             noPai.setEsquerda(noNovo);
         } else {
             noPai.setDireita(noNovo);
         }
         this.tamanho++;
+    }
+
+    public NoAluno busca(int matricula) {
+        NoAluno noAtual = this.raiz;
+
+        while (noAtual != null && noAtual.getMatricula() != matricula) {
+            if (matricula < noAtual.getMatricula()) {
+                noAtual = noAtual.getEsquerda();
+            } else {
+                noAtual = noAtual.getDireita();
+            }
+        }
+
+        return noAtual;
+    }
+
+    public void caminhaCentral() {
+        caminhaCentral(raiz);
+    }
+
+    public void caminhaCentral(NoAluno subArvore) {
+        if (subArvore != null) {
+            caminhaCentral(subArvore.getEsquerda());
+            System.out.printf("%d - %s (%s)\n", subArvore.getMatricula(), subArvore.getNome(), subArvore.getCurso());
+            caminhaCentral(subArvore.getDireita());
+        }
     }
 
 }
