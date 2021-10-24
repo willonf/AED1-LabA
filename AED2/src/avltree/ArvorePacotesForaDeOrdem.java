@@ -6,7 +6,6 @@ public class ArvorePacotesForaDeOrdem {
     private int ultimaSequencia;
 
     public ArvorePacotesForaDeOrdem() {
-        this.tamanho = 0;
     }
 
     public NoPacoteTCP getRaiz() {
@@ -29,10 +28,10 @@ public class ArvorePacotesForaDeOrdem {
         return ultimaSequencia;
     }
 
-    public void inser(int sequencia, int portaOrigem, int portaDestino) {
+    public void insere(int sequencia, int portaOrigem, int portaDestino) {
         if (getRaiz() == null) {
             this.raiz = new NoPacoteTCP(sequencia, portaOrigem, portaDestino, null);
-            this.setTamanho(this.tamanho() + 1);
+            this.setTamanho(1);
             return;
         }
 
@@ -173,20 +172,20 @@ public class ArvorePacotesForaDeOrdem {
         int balanceamento = atual.getBalanceamento();
 
         if (balanceamento == -2) {
-            if(altura(atual.getEsquerda().getEsquerda()) >= altura(atual.getEsquerda().getDireita())) {
+            if (altura(atual.getEsquerda().getEsquerda()) >= altura(atual.getEsquerda().getDireita())) {
                 atual = rotacaoDireita(atual);
             } else {
                 atual = duplaRotacaoEsquerdaDireita(atual);
             }
         } else if (balanceamento == 2) {
-            if(altura(atual.getDireita().getDireita()) >= altura(atual.getDireita().getEsquerda())){
+            if (altura(atual.getDireita().getDireita()) >= altura(atual.getDireita().getEsquerda())) {
                 atual = rotacaoEsquerda(atual);
             } else {
                 atual = duplaRotacaoDireitaEsquerda(atual);
             }
         }
 
-        if(atual.getPai() != null) {
+        if (atual.getPai() != null) {
             this.verificarBalanceamento(atual.getPai());
         } else {
             this.setRaiz(atual);
@@ -198,23 +197,23 @@ public class ArvorePacotesForaDeOrdem {
     }
 
 
-    public NoPacoteTCP rotacaoEsquerda(NoPacoteTCP inicial){
+    public NoPacoteTCP rotacaoEsquerda(NoPacoteTCP inicial) {
         NoPacoteTCP direita = inicial.getDireita();
         direita.setPai(inicial.getPai());
 
         inicial.setDireita(direita.getEsquerda());
 
-        if(inicial.getDireita() != null){
+        if (inicial.getDireita() != null) {
             inicial.getDireita().setPai(inicial);
         }
 
         direita.setEsquerda(inicial);
         inicial.setPai(direita);
 
-        if(direita.getPai() != null) {
-            if (direita.getPai().getDireita() == inicial){
+        if (direita.getPai() != null) {
+            if (direita.getPai().getDireita() == inicial) {
                 direita.getPai().setDireita(direita);
-            } else if (direita.getPai().getEsquerda() == inicial){
+            } else if (direita.getPai().getEsquerda() == inicial) {
                 direita.getPai().setEsquerda(direita);
             }
         }
@@ -225,7 +224,7 @@ public class ArvorePacotesForaDeOrdem {
 
     }
 
-    public NoPacoteTCP rotacaoDireita(NoPacoteTCP inicial){
+    public NoPacoteTCP rotacaoDireita(NoPacoteTCP inicial) {
         NoPacoteTCP esquerda = inicial.getEsquerda();
         esquerda.setPai(inicial.getPai());
 
@@ -238,10 +237,10 @@ public class ArvorePacotesForaDeOrdem {
         esquerda.setDireita(inicial);
         inicial.setPai(esquerda);
 
-        if(esquerda.getPai() != null){
-            if (esquerda.getPai().getDireita() == inicial){
+        if (esquerda.getPai() != null) {
+            if (esquerda.getPai().getDireita() == inicial) {
                 esquerda.getPai().setDireita(esquerda);
-            } else if (esquerda.getPai().getEsquerda() == inicial){
+            } else if (esquerda.getPai().getEsquerda() == inicial) {
                 esquerda.getPai().setEsquerda(esquerda);
             }
         }
@@ -252,19 +251,23 @@ public class ArvorePacotesForaDeOrdem {
         return esquerda;
 
     }
-    public NoPacoteTCP duplaRotacaoEsquerdaDireita(NoPacoteTCP inicial){
+
+    public NoPacoteTCP duplaRotacaoEsquerdaDireita(NoPacoteTCP inicial) {
 
         inicial.setEsquerda(rotacaoEsquerda(inicial.getEsquerda()));
 
         return rotacaoDireita(inicial);
 
     }
-    public NoPacoteTCP duplaRotacaoDireitaEsquerda(NoPacoteTCP inicial){
+
+    public NoPacoteTCP duplaRotacaoDireitaEsquerda(NoPacoteTCP inicial) {
         inicial.setDireita(rotacaoDireita(inicial.getDireita()));
         return rotacaoEsquerda(inicial);
     }
-    public void pacoteRecebido(int sequencia, int portaOrigem, int portaDestino){
 
+    public void pacoteRecebido(int sequencia, int portaOrigem, int portaDestino) {
+
+        this.insere(sequencia, portaOrigem, portaDestino);
     }
 
 
