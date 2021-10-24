@@ -6,6 +6,8 @@ public class ArvorePacotesForaDeOrdem {
     private int ultimaSequencia;
 
     public ArvorePacotesForaDeOrdem() {
+        this.setRaiz(null);
+        this.setTamanho(0);
     }
 
     public NoPacoteTCP getRaiz() {
@@ -26,6 +28,10 @@ public class ArvorePacotesForaDeOrdem {
 
     public int getUltimaSequencia() {
         return ultimaSequencia;
+    }
+
+    public void setUltimaSequencia(int ultimaSequencia) {
+        this.ultimaSequencia = ultimaSequencia;
     }
 
     public void insere(int sequencia, int portaOrigem, int portaDestino) {
@@ -58,6 +64,7 @@ public class ArvorePacotesForaDeOrdem {
         }
         this.setTamanho(this.tamanho() + 1);
         this.verificarBalanceamento(noNovo);
+        this.setUltimaSequencia(sequencia);
     }
 
     public NoPacoteTCP minimo() {
@@ -267,7 +274,17 @@ public class ArvorePacotesForaDeOrdem {
 
     public void pacoteRecebido(int sequencia, int portaOrigem, int portaDestino) {
 
-        this.insere(sequencia, portaOrigem, portaDestino);
+        if (sequencia - this.getUltimaSequencia() == 1) {
+            NoPacoteTCP noNovo = new NoPacoteTCP(sequencia, portaOrigem, portaDestino, null);
+            this.setUltimaSequencia(noNovo.getSequencia());
+            System.out.println(noNovo);
+            // Caminhamento central?
+            // Remove nó
+            // Atualiza a última sequência
+        } else {
+            this.insere(sequencia, portaOrigem, portaDestino);
+            System.out.printf("Fora de ordem: %d%n", sequencia);
+        }
     }
 
 
