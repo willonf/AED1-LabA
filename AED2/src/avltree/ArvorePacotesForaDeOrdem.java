@@ -272,13 +272,25 @@ public class ArvorePacotesForaDeOrdem {
         return rotacaoEsquerda(inicial);
     }
 
+    public void caminhaCentral() {
+        this.caminhaCentral(this.getRaiz());
+    }
+
+    public void caminhaCentral(NoPacoteTCP subArvore){
+        if(subArvore != null) {
+            this.caminhaCentral(subArvore.getEsquerda());
+            System.out.println(subArvore);
+            this.caminhaCentral(subArvore.getDireita());
+        }
+    }
+
     public void pacoteRecebido(int sequencia, int portaOrigem, int portaDestino) {
 
         if (sequencia - this.getUltimaSequencia() == 1) {
             NoPacoteTCP noNovo = new NoPacoteTCP(sequencia, portaOrigem, portaDestino, null);
             this.setUltimaSequencia(noNovo.getSequencia());
             System.out.println(noNovo);
-            // Caminhamento central?
+            this.caminhaCentral();
             // Remove nó
             // Atualiza a última sequência
         } else {
