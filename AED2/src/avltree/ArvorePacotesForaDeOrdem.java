@@ -64,7 +64,6 @@ public class ArvorePacotesForaDeOrdem {
         }
         this.setTamanho(this.tamanho() + 1);
         this.verificarBalanceamento(noNovo);
-        this.setUltimaSequencia(sequencia);
     }
 
     public NoPacoteTCP minimo() {
@@ -288,15 +287,15 @@ public class ArvorePacotesForaDeOrdem {
 
         if (sequencia - this.getUltimaSequencia() == 1) {
             NoPacoteTCP noNovo = new NoPacoteTCP(sequencia, portaOrigem, portaDestino, null);
-            this.setUltimaSequencia(noNovo.getSequencia());
+            this.setUltimaSequencia(this.maximo().getSequencia());
             System.out.println(noNovo);
             this.caminhaCentral();
-            // Remove nó
-            // Atualiza a última sequência
+//            this.setRaiz(null);
         } else {
             this.insere(sequencia, portaOrigem, portaDestino);
             System.out.printf("Fora de ordem: %d%n", sequencia);
         }
+        this.setUltimaSequencia(sequencia);
     }
 
 
