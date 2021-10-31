@@ -11,7 +11,7 @@ int automato(char cadeia[])
     int tam = strlen(cadeia);
     while (pos < tam)
     {
-        printf("Estado anterior: %d --- ", estado);
+        // printf("Estado anterior: %d --- ", estado);
 
         switch (estado)
         {
@@ -34,12 +34,18 @@ int automato(char cadeia[])
             if (cadeia[pos] >= '0' && cadeia[pos] <= '9')
             {
                 estado = 1;
+            } else {
+                estado = 0;
+                return estado;
             }
             break;
         case 5:
             if (cadeia[pos] == 'I')
             {
                 estado = 6;
+            } else {
+                estado = 0;
+                return estado;
             }
             break;
         case 6:
@@ -52,6 +58,10 @@ int automato(char cadeia[])
             if (cadeia[pos] == 'x')
             {
                 estado = 3;
+            } else if(cadeia[pos] == '0') {
+                estado = 2;
+            } else {
+                return estado;
             }
             break;
         case 7:
@@ -72,11 +82,12 @@ int automato(char cadeia[])
             else
             {
                 estado = 3;
+                return estado;
             }
             break;
         }
 
-        printf("Caractere: %c (%d) --- Estado atual: %d \n", cadeia[pos], cadeia[pos], estado);
+        // printf("Caractere: %c (%d) --- Estado atual: %d \n", cadeia[pos], cadeia[pos], estado);
         pos++;
     }
     return estado;
@@ -86,26 +97,26 @@ void main()
 {
     char cadeia[81];
     int resultado;
-    // while (true)
-    // {
+    while (true)
+    {
         scanf("%s", cadeia);
         resultado = automato(cadeia);
         if (resultado == 1 || resultado == 2)
         {
-            printf("%s: decimal\n");
+            printf("%s: decimal\n", cadeia);
         }
         else if (resultado == 4)
         {
-            printf("%s: hexadecimal\n");
+            printf("%s: hexadecimal\n", cadeia);
         }
         else if (resultado == 0 || resultado == 3 || resultado == 5 || resultado == 6)
         {
-            printf("%s: rejeitado\n");
+            printf("%s: rejeitado\n",cadeia);
         }
-        else
+        else if(resultado == 7)
         {
-            printf("FIM");
-            // break;
+            // printf("FIM");
+            break;
         }
-   // }
+   }
 }
