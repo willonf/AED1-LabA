@@ -52,6 +52,9 @@ int automato(char cadeia[])
             if (cadeia[pos] == 'M')
             {
                 estado = 7;
+            } else {
+                estado = 5;
+                return estado;
             }
             break;
         case 2:
@@ -111,7 +114,7 @@ void main()
         }
         else if (resultado == 0 || resultado == 3 || resultado == 5 || resultado == 6)
         {
-            printf("%s: rejeitado\n",cadeia);
+            printf("%s: rejeitada\n", cadeia);
         }
         else if(resultado == 7)
         {
