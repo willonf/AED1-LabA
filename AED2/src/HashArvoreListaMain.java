@@ -1,13 +1,12 @@
-import trabalhopratico3.NoArvore;
+import trabalhopratico3.TabelaHash;
 
 public class HashArvoreListaMain {
 
     public static void main(String[] args) {
-        NoArvore n1 = new NoArvore(66, "Stass Allie");
-        n1.insereLista("Stass Allie");
-        n1.insereLista("Cin Drallig");
-        System.out.println(n1);
-
+        TabelaHash t = new TabelaHash(3);
+        t.insere(66, "Stass Allie");
+        boolean b = t.insere(66, "Cin Drallig");
+        System.out.println(t);
     }
 }
 

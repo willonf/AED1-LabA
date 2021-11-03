@@ -5,7 +5,8 @@ public class TabelaHash {
     private int tamanho;
 
     public TabelaHash(int maxTam) {
-        this.tamanho = maxTam;
+        this.tabela = new NoArvore[3];
+        this.tamanho = 0;
     }
 
     public NoArvore[] getTabela() {
@@ -24,31 +25,61 @@ public class TabelaHash {
         int index = funcaoHash(chave);
         int i = 0;
 
-        while (this.getTabela()[i] != null
-                && !this.getTabela()[index].getValor().equals(chave)
-                && i < this.getTabela().length) {
+        while (this.getTabela()[i] != null && this.getTabela()[index].getChave() != chave && i < this.getTabela().length) {
             i++;
-
-            //VERIFICAR ESSA ATRIBUIÇÃO
-            index = (index + 1) % this.getTabela().length;
+            index = (index + 1);
         }
         NoArvore result = this.getTabela()[index];
-        if (result != null && result.getValor().equals(chave)) {
+
+        if (result != null && result.getChave() == chave) {
             return result;
         }
-        return result;
+        return null;
     }
 
     public boolean insere(int chave, Object valor) {
+        int index = funcaoHash(chave);
+        NoArvore noAtual = this.tabela[index];
+        boolean exists = false;
+        while (noAtual != null && noAtual.getChave() != chave){
+            if(chave < noAtual.getChave()){
+                noAtual = noAtual.getEsquerda();
+            } else {
+                noAtual = noAtual.getDireita();
+            }
+        }
+
+        if (noAtual == null){
+            noAtual.setPai();
+        }
+
+
+
 
     }
 
     @Override
     public String toString() {
-        return "TabelaHash{}";
+        String result = "";
+        for (int i = 0; i < this.tabela.length; i++) {
+            result = result.concat(String.format("Posição %d da tabela:\n", i));
+            result = result.concat(this.caminhaIdentado(this.getTabela()[i], 0));
+        }
+        return result;
     }
 
-    public String caminhaIdentado(NoArvore subArvore, int identacao) {
+    public String caminhaIdentado(NoArvore subArvore, int indentacao) {
+        String result = "";
+        if (subArvore == null || this.tamanho() == 0) {
+            return "";
+        }
+        for (int i = 0; i < indentacao; i++) {
+            result = result.concat(" ");
+        }
+        result = result.concat(subArvore.toString()).concat("\n");
 
+        result = result.concat(this.caminhaIdentado(subArvore.getEsquerda(), indentacao + 1));
+        result = result.concat(this.caminhaIdentado(subArvore.getDireita(), indentacao + 1));
+        return result;
     }
 }
