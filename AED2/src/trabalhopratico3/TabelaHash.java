@@ -39,23 +39,34 @@ public class TabelaHash {
 
     public boolean insere(int chave, Object valor) {
         int index = funcaoHash(chave);
-        NoArvore noAtual = this.tabela[index];
-        boolean exists = false;
-        while (noAtual != null && noAtual.getChave() != chave){
-            if(chave < noAtual.getChave()){
+        NoArvore noAtual = this.getTabela()[index];
+        NoArvore noPai = null;
+
+        if (this.getTabela()[index] == null) {
+            NoLista noListaNovo = new NoLista(valor);
+//            this.getTabela()[index].setListaTopo(noListaNovo);
+            this.getTabela()[index] = new NoArvore(chave,valor);
+            this.tamanho++;
+            return true;
+        }
+
+        do {
+            noPai = noAtual;
+            if (chave < noAtual.getChave()) {
                 noAtual = noAtual.getEsquerda();
-            } else {
+            } else if (chave > noAtual.getChave()) {
                 noAtual = noAtual.getDireita();
+            } else {
+                return noAtual.insereLista(valor);
             }
+        } while (noAtual != null);
+        NoArvore noNovo = new NoArvore(chave, valor);
+        if (chave < noPai.getChave()) {
+            noPai.setEsquerda(noNovo);
+        } else {
+            noPai.setDireita(noNovo);
         }
-
-        if (noAtual == null){
-            noAtual.setPai();
-        }
-
-
-
-
+        return true;
     }
 
     @Override
