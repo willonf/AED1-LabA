@@ -18,18 +18,22 @@ public class TabelaHash {
     }
 
     private int funcaoHash(int chave) {
-        return (int) (Math.floor(this.tamanho() * (chave * 0.567 % 1)));
+        return (int) (Math.floor(this.tabela.length * (chave * 0.543 % 1)));
     }
 
     public NoArvore busca(int chave) {
         int index = funcaoHash(chave);
         int i = 0;
 
-        while (this.getTabela()[i] != null && this.getTabela()[index].getChave() != chave && i < this.getTabela().length) {
+        if(this.tabela[index] == null){
+            return null;
+        }
+
+        while (this.tabela[i] != null && this.tabela[index].getChave() != chave && i < this.tabela.length) {
             i++;
             index = (index + 1);
         }
-        NoArvore result = this.getTabela()[index];
+        NoArvore result = this.tabela[index];
 
         if (result != null && result.getChave() == chave) {
             return result;
@@ -39,13 +43,12 @@ public class TabelaHash {
 
     public boolean insere(int chave, Object valor) {
         int index = funcaoHash(chave);
-        NoArvore noAtual = this.getTabela()[index];
+        NoArvore noAtual = this.tabela[index];
         NoArvore noPai = null;
 
-        if (this.getTabela()[index] == null) {
+        if (this.tabela[index] == null) {
             NoLista noListaNovo = new NoLista(valor);
-//            this.getTabela()[index].setListaTopo(noListaNovo);
-            this.getTabela()[index] = new NoArvore(chave,valor);
+            this.tabela[index] = new NoArvore(chave,valor);
             this.tamanho++;
             return true;
         }
@@ -66,6 +69,7 @@ public class TabelaHash {
         } else {
             noPai.setDireita(noNovo);
         }
+        this.tamanho++;
         return true;
     }
 
@@ -74,7 +78,7 @@ public class TabelaHash {
         String result = "";
         for (int i = 0; i < this.tabela.length; i++) {
             result = result.concat(String.format("Posição %d da tabela:\n", i));
-            result = result.concat(this.caminhaIdentado(this.getTabela()[i], 0));
+            result = result.concat(this.caminhaIdentado(this.tabela[i], 0));
         }
         return result;
     }
