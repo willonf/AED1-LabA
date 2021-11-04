@@ -18,12 +18,16 @@ public class TabelaHash {
     }
 
     private int funcaoHash(int chave) {
-        return (int) (Math.floor(this.tamanho() * (chave * 0.567 % 1)));
+        return (int) (Math.floor(this.tabela.length * (chave * 0.543 % 1)));
     }
 
     public NoArvore busca(int chave) {
         int index = funcaoHash(chave);
         int i = 0;
+
+        if(this.getTabela()[index] == null){
+            return null;
+        }
 
         while (this.getTabela()[i] != null && this.getTabela()[index].getChave() != chave && i < this.getTabela().length) {
             i++;
@@ -44,7 +48,6 @@ public class TabelaHash {
 
         if (this.getTabela()[index] == null) {
             NoLista noListaNovo = new NoLista(valor);
-//            this.getTabela()[index].setListaTopo(noListaNovo);
             this.getTabela()[index] = new NoArvore(chave,valor);
             this.tamanho++;
             return true;
@@ -66,6 +69,7 @@ public class TabelaHash {
         } else {
             noPai.setDireita(noNovo);
         }
+        this.tamanho++;
         return true;
     }
 
