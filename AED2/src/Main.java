@@ -3,7 +3,7 @@ import trabalhopratico3.TabelaHash;
 import java.util.Arrays;
 
 
-public class HashArvoreListaMain {
+public class Main {
 
     public static void main(String[] args) {
         TabelaHash t = new TabelaHash(3);
