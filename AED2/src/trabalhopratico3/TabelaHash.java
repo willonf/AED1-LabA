@@ -5,7 +5,7 @@ public class TabelaHash {
     private int tamanho;
 
     public TabelaHash(int maxTam) {
-        this.tabela = new NoArvore[3];
+        this.tabela = new NoArvore[maxTam];
         this.tamanho = 0;
     }
 
@@ -18,40 +18,39 @@ public class TabelaHash {
     }
 
     private int funcaoHash(int chave) {
-        return (int) (Math.floor(this.tabela.length * (chave * 0.543 % 1)));
+//        return (int) (Math.floor(this.tabela.length * (chave * 0.543 % 1)));
+        return chave % tabela.length;
     }
 
     public NoArvore busca(int chave) {
-        int index = funcaoHash(chave);
-        int i = 0;
+        NoArvore noAtual = tabela[funcaoHash(chave)];
 
-        if(this.tabela[index] == null){
-            return null;
+        while(noAtual != null && noAtual.getChave() != chave){
+            if (chave < noAtual.getChave()){
+                noAtual = noAtual.getEsquerda();
+            } else {
+                noAtual = noAtual.getDireita();
+            }
         }
-
-        while (this.tabela[i] != null && this.tabela[index].getChave() != chave && i < this.tabela.length) {
-            i++;
-            index = (index + 1);
-        }
-        NoArvore result = this.tabela[index];
-
-        if (result != null && result.getChave() == chave) {
-            return result;
-        }
-        return null;
+        return  noAtual;
     }
 
     public boolean insere(int chave, Object valor) {
         int index = funcaoHash(chave);
-        NoArvore noAtual = this.tabela[index];
-        NoArvore noPai = null;
+        NoArvore noAtual = busca(chave);
+        NoArvore noPai;
+
+        if(noAtual != null){
+            return noAtual.insereLista(valor);
+        }
 
         if (this.tabela[index] == null) {
-            NoLista noListaNovo = new NoLista(valor);
             this.tabela[index] = new NoArvore(chave,valor);
             this.tamanho++;
             return true;
         }
+
+        noAtual = tabela[index];
 
         do {
             noPai = noAtual;
