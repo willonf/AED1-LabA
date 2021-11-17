@@ -73,16 +73,8 @@ public class GrafoListaAdjacencias {
         int tamCaminho = 0;
         int[] caminho = new int[this.getNumVertices()];
         boolean[] visitado = new boolean[this.getNumVertices()];
-
         Vertice vDestino = this.getVertice(destino);
         Vertice vizinho;
-        VerticeAdjacente vizinhos;
-        Vertice melhorVizinho = null;
-        double dist;
-        int menorDistancia = Integer.MAX_VALUE;
-
-        double xDestino = this.getVertice(destino).getX();
-        double yDestino = this.getVertice(destino).getY();
 
         for (int i = 0; i < this.getNumVertices(); i++) {
             caminho[i] = -1;
@@ -92,36 +84,46 @@ public class GrafoListaAdjacencias {
         caminho[tamCaminho++] = origem;
         Vertice noAtual = this.getVertice(origem);
 
-        while (noAtual != vDestino) {
-            vizinhos = noAtual.getVizinhos();
-            do {
-                if (!visitado[vizinhos.getVertice().getId()]) {
-                    vizinho = vizinhos.getVertice();
-                    double xAtual = vizinho.getX();
-                    double yAtual = vizinho.getY();
-                    dist = Math.sqrt(Math.pow(xAtual-xDestino, 2) + Math.pow(yAtual - yDestino, 2));
-                    if(dist < menorDistancia){
-                        melhorVizinho = vizinho;
-                        menorDistancia = (int) dist;
-                    }
-                }
-                vizinhos = vizinhos.getProx();
-            } while (vizinhos != null);
-
-
-            if (melhorVizinho == null) {
+        while (noAtual.getId() != vDestino.getId()) {
+            vizinho = this.buscarMelhorVizinho(noAtual, visitado, destino);
+            if (vizinho == null) {
                 return null;
             }
-            caminho[tamCaminho++] = melhorVizinho.getId();
-            visitado[melhorVizinho.getId()] = true;
-            noAtual = melhorVizinho;
+            caminho[tamCaminho++] = vizinho.getId();
+            visitado[vizinho.getId()] = true;
+            noAtual = vizinho;
         }
-
-
         return caminho;
     }
 
+    public Vertice buscarMelhorVizinho(Vertice noAtual, boolean[] visitado, int destino) {
+        VerticeAdjacente vizinhos;
+        Vertice vizinho;
 
+        double xDestino = this.getVertice(destino).getX();
+        double yDestino = this.getVertice(destino).getY();
+
+        Vertice melhorVizinho = null;
+        double dist;
+        double menorDistancia = Double.MAX_VALUE;
+
+        vizinhos = noAtual.getVizinhos();
+        do {
+            if (!visitado[vizinhos.getVertice().getId()]) {
+                vizinho = vizinhos.getVertice();
+                double xAtual = vizinho.getX();
+                double yAtual = vizinho.getY();
+                dist = Math.sqrt(Math.pow(xAtual - xDestino, 2) + Math.pow(yAtual - yDestino, 2));
+                if (dist < menorDistancia) {
+                    melhorVizinho = vizinho;
+                    menorDistancia = dist;
+                }
+                System.out.println(menorDistancia);
+            }
+            vizinhos = vizinhos.getProx();
+        } while (vizinhos != null);
+        return melhorVizinho;
+    }
 
     public int getNumVertices() {
         return numVertices;
