@@ -137,8 +137,7 @@ public class GrafoListaAdjacencias {
     }
 
     // Busca em largura
-
-    void bfs(int vInicial) {
+    void bfs(int vInicial) { // BFS  >  Breadth-First Search
         int[] cor = new int[numVertices]; // branco=0, cinza=1, preto=2
         int[] dist = new int[numVertices]; // distância até o nó
         int[] pred = new int[numVertices]; // predecessor do nó
@@ -169,4 +168,37 @@ public class GrafoListaAdjacencias {
             cor[u] = 2;
         }
     }
+
+
+    // Busca em profundidade
+
+    int tempo = 0;
+
+    public void dfs(int vInicial) { // DFS > Depth-First Search
+        int[] cor = new int[numVertices]; // branco=0, cinza=1, preto=2
+        int[] pred = new int[numVertices]; // predecessor do nó
+        int[] tDesc = new int[numVertices]; // tempo de descoberta
+        int[] tFim = new int[numVertices]; // tempo de término
+        tempo = 0;
+        dfsVisita(vInicial, cor, pred, tDesc, tFim);
+    }
+
+    public void dfsVisita(int u, int[] cor, int[] pred, int[] tDesc, int[] tFim) {
+        cor[u] = 1;
+        tDesc[u] = ++tempo;
+        System.out.println("No " + u + " ficou cinza no tempo " + tempo + " ...");
+
+        for (VerticeAdjacente va = vertices[u].getVizinhos(); va != null; va = va.getProx()) {
+            int v = va.getVertice().getId();
+            if (cor[v] == 0) {
+                pred[v] = u;
+                dfsVisita(v, cor, pred, tDesc, tFim);
+            }
+        }
+
+        cor[u] = 2;
+        tFim[u] = ++tempo;
+        System.out.println("No " + u + " ficou preto no tempo  " + tempo + " ...");
+    }
+
 }
