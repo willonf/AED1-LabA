@@ -171,7 +171,6 @@ public class GrafoListaAdjacencias {
 
 
     // Busca em profundidade
-
     int tempo = 0;
 
     public void dfs(int vInicial) { // DFS > Depth-First Search
@@ -200,5 +199,31 @@ public class GrafoListaAdjacencias {
         tFim[u] = ++tempo;
         System.out.println("No " + u + " ficou preto no tempo  " + tempo + " ...");
     }
+
+    //Algoritmmo de Djikstra
+    public int[] caminhoMinimoDijkstra(int origem) {
+        VerticeAdjacente vertex;
+        int[] prev = new int[numVertices]; // predecessor do nó
+        int[] dist = new int[numVertices]; // distância até o nó
+        Queue<Integer> fila = new LinkedList<Integer>();
+
+        dist[origem] = 0;
+        prev[origem] = -1;
+        fila.add(origem);
+
+        while (!fila.isEmpty()) {
+            int u = fila.remove();
+            for (VerticeAdjacente va = vertices[u].getVizinhos(); va != null; va = va.getProx()) {
+                int alt = dist[u];
+                if (alt < dist[va.getVertice().getId()]) {
+                    dist[va.getVertice().getId()] = alt;
+                    prev[va.getVertice().getId()] = u;
+                }
+            }
+        }
+        return prev;
+
+    }
+
 
 }
