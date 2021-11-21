@@ -1,5 +1,8 @@
 package graphs;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class GrafoListaAdjacencias {
     private Vertice[] vertices;
     private int numVertices;
@@ -131,5 +134,39 @@ public class GrafoListaAdjacencias {
 
     public int getNumArestas() {
         return numArestas;
+    }
+
+    // Busca em largura
+
+    void bfs(int vInicial) {
+        int[] cor = new int[numVertices]; // branco=0, cinza=1, preto=2
+        int[] dist = new int[numVertices]; // distância até o nó
+        int[] pred = new int[numVertices]; // predecessor do nó
+
+        Queue<Integer> fila = new LinkedList<Integer>();
+
+        cor[vInicial] = 1;
+        dist[vInicial] = 0;
+        pred[vInicial] = -1;
+
+        fila.add(vInicial);
+
+        while (!fila.isEmpty()) {
+            int u = fila.remove();
+
+            for (VerticeAdjacente va = vertices[u].getVizinhos(); va != null; va = va.getProx()) {
+                int v = va.getVertice().getId();
+
+                if (cor[v] == 0) {
+                    System.out.println("Nó " + v + " ficou cinza...");
+                    cor[v] = 1;
+                    dist[v] = dist[u] + 1;
+                    pred[v] = u;
+                    fila.add(v);
+                }
+            }
+            System.out.println("Nó " + u + " ficou preto...");
+            cor[u] = 2;
+        }
     }
 }
