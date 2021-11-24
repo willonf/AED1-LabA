@@ -1,6 +1,7 @@
 package graphs;
 
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class GrafoListaAdjacencias {
@@ -201,29 +202,33 @@ public class GrafoListaAdjacencias {
     }
 
     //Algoritmmo de Djikstra
-    public int[] caminhoMinimoDijkstra(int origem) {
-        VerticeAdjacente vertex;
+    public int[] caminhoMinimoDijkstra(int source) { // source = id da origem
         int[] prev = new int[numVertices]; // predecessor do nó
         int[] dist = new int[numVertices]; // distância até o nó
-        Queue<Integer> fila = new LinkedList<Integer>();
+        int alt;
+        PriorityQueue<Integer> Q = new PriorityQueue<Integer>();
 
-        dist[origem] = 0;
-        prev[origem] = -1;
-        fila.add(origem);
+        for (Vertice v : vertices) {
+            if (v.getId() != source) {
+                dist[v.getId()] = Integer.MAX_VALUE;
+                prev[v.getId()] = -1;
+                Q.add(v.getId());
+            }
+        }
 
-        while (!fila.isEmpty()) {
-            int u = fila.remove();
-            for (VerticeAdjacente va = vertices[u].getVizinhos(); va != null; va = va.getProx()) {
-                int alt = dist[u];
-                if (alt < dist[va.getVertice().getId()]) {
-                    dist[va.getVertice().getId()] = alt;
-                    prev[va.getVertice().getId()] = u;
+        while (!Q.isEmpty()) {
+            int u = Q.poll();
+            for (VerticeAdjacente v = vertices[u].getVizinhos(); v != null; v = v.getProx()) {
+                alt = dist[u] + v.getPeso();
+                if (alt < dist[v.getVertice().getId()]) {
+                    dist[v.getVertice().getId()] = alt;
+                    prev[v.getVertice().getId()] = u;
+                    Q.add(v.getVertice().getId());
                 }
             }
         }
+        // Points = 2.7
+        prev[source] = -1;
         return prev;
-
     }
-
-
 }
