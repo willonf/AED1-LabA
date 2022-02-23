@@ -43,7 +43,7 @@ public class Deposito {
     }
 }
 
-class DepCaixasCom {
+class DepCaixasSem {
     static class Produtor implements Runnable {
 
         private Deposito deposito;
