@@ -1,6 +1,6 @@
-package exercicios;
+package exercicios.relogio;
 
-public class Exercicio1 {
+public class RelogioMain {
 
     static class contadorTempo {
         private int tick;

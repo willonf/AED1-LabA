@@ -1,4 +1,4 @@
-package exercicios;
+package exercicios.relogio;
 
 public class contadorTempo {
     private int tick;

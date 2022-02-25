@@ -1,4 +1,5 @@
-package exercicios;
+package exercicios.condicaocorrida;
+
 // Com condição de corrida
 public class Deposito1 {
     private int qtdeItems = 0;
@@ -43,7 +44,7 @@ public class Deposito1 {
     }
 }
 
-class DepCaixasCom1 {
+class DepCaixasCom {
     static class Produtor implements Runnable {
 
         private Deposito deposito;

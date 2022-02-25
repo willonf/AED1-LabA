@@ -1,4 +1,4 @@
-package exercicios;
+package exercicios.condicaocorrida;
 // Sem condição de corrida
 public class Deposito {
     private int qtdeItems = 0;

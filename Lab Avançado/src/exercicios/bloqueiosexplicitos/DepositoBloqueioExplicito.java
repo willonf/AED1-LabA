@@ -1,18 +1,13 @@
-package exercicios;
+package exercicios.bloqueiosexplicitos;
 
-import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-
-public class Deposito2 {
+// Sem condição de corrida
+public class DepositoBloqueioExplicito {
     private int qtdeItems = 0;
     private int capacidade;
     private final Object lock1 = new Object();
     private final Object lock2 = new Object();
 
-    public Deposito2(int capacidade) {
+    public DepositoBloqueioExplicito(int capacidade) {
         this.capacidade = capacidade;
     }
 
@@ -54,6 +49,11 @@ public class Deposito2 {
 
     }
 
+    public void process(){
+        this.armazenar();
+        this.retirar();
+    }
+
     public int getQtdeItems() {
         return qtdeItems;
     }
@@ -67,75 +67,84 @@ public class Deposito2 {
     }
 }
 
-class App {
+class DepCaixasComBloqExplicito {
     static class Produtor implements Runnable {
 
-        private Deposito2 deposito;
+        private DepositoBloqueioExplicito deposito;
         private int tempo;
         int MAX = 5;
         int count = 0;
 
-        public Produtor(Deposito2 deposito, int tempo) {
+        public Produtor(DepositoBloqueioExplicito deposito, int tempo) {
             this.deposito = deposito;
             this.tempo = tempo;
         }
 
         @Override
         public void run() {
-            this.deposito.armazenar();
-            try {
-                Thread.sleep(this.tempo);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while (count < MAX) {
+                this.deposito.armazenar();
+                count++;
+                try {
+                    Thread.sleep(this.tempo);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    static class Consumidor implements Runnable {
-        private Deposito2 deposito;
+    static class Consumidor extends Thread {
+        private DepositoBloqueioExplicito deposito;
         private int tempo;
         int MAX = 5;
         int count = 0;
 
-        public Consumidor(Deposito2 deposito, int tempo) {
+        public Consumidor(DepositoBloqueioExplicito deposito, int tempo) {
             this.deposito = deposito;
             this.tempo = tempo;
         }
 
-        @Override
         public void run() {
-            this.deposito.retirar();
-            try {
-                Thread.sleep(this.tempo);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while (count < MAX) {
+                this.deposito.retirar();
+                count++;
+                try {
+                    Thread.sleep(this.tempo);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
     }
 
     public static void main(String[] args) {
-        Deposito2 dep = new Deposito2(20);
-        ExecutorService executor = Executors.newFixedThreadPool(5);
-        Produtor prod;
-        Consumidor consum;
-        Random random = new Random();
+        DepositoBloqueioExplicito dep = new DepositoBloqueioExplicito(2);
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dep.process();
+            }
+        });
+
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dep.process();
+            }
+        });
 
 
-        for (int i = 0; i < 20; i++) {
-            prod = new Produtor(dep, random.nextInt(200));
-            consum = new Consumidor(dep, random.nextInt(200));
-            executor.submit(prod);
-            executor.submit(consum);
-        }
-
-
-        executor.shutdown();
+        t1.start();
+        t2.start();
         try {
-            executor.awaitTermination(1, TimeUnit.MINUTES);
-        } catch (InterruptedException ignored) {}
-        System.out.println(dep.getQtdeItems());
-
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

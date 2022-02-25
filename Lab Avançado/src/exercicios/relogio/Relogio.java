@@ -1,4 +1,4 @@
-package exercicios;
+package exercicios.relogio;
 
 public class Relogio implements Runnable {
     private contadorTempo contTempo;
