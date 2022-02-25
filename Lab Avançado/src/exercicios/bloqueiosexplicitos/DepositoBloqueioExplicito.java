@@ -31,7 +31,7 @@ public class DepositoBloqueioExplicito {
     }
 
     void retirar() {   // "Stage two"
-        synchronized (lock2) {
+        synchronized (lock1) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {

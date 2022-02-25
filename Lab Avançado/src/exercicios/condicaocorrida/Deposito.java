@@ -10,7 +10,7 @@ public class Deposito {
 
     synchronized void armazenar() {
         System.out.println("Tentando armazenar uma caixa no depósito...");
-        if (this.getQtdeItems() <= this.getCapacidade()) {
+        if (this.getQtdeItems() < this.getCapacidade()) {
             this.setQtdeItems(this.getQtdeItems() + 1);
             System.out.println("Armazenada - Caixas no Deposito: " + this.getQtdeItems());
             System.out.println("Caixa armazenada\n");
