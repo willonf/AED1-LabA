@@ -1,0 +1,10 @@
+        for (double[] linhaA: matrizA) {
+            for (int i = 0; i < 2; i++) {
+                double result = 0;
+                for (int j = 0; j < 2; j++) {
+                     result += linhaA[j] * matrizB[j][i];
+                }
+                matrizC[i][k] = result;
+            }
+            k++;
+        }
