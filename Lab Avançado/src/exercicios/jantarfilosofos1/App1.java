@@ -1,6 +1,6 @@
 package exercicios.jantarfilosofos1;
 
-// JANTAR DOS FILÓSOFOS (COM DEADLOCKS)
+// JANTAR DOS FILÓSOFOS (SEM DEADLOCKS)
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
