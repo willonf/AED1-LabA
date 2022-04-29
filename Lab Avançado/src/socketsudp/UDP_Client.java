@@ -1,50 +1,47 @@
 package socketsudp;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
-class UDP_Client {
-    public final static int porta = 9876;
-    public static void main(String args[]) throws Exception {
-        Scanner input = new Scanner (System.in);
-        byte[] sendData = new byte[256];
-        byte[] receiveData = new byte[256];
+public class UDP_Client{
 
-        // Gerando o socket UDP
-        DatagramSocket clientSocket = new DatagramSocket();
+    public final static int PORT = 9000;
 
-        // Gerando o endereço IP do servidor
+    public static void main(String[] args) throws Exception{
+
+        DatagramSocket client = new DatagramSocket();
+
         String hostname = args.length > 0 ? args[0] : "localhost";
         InetAddress IPAddress = InetAddress.getByName(hostname);
 
-        // Preparando a mensagem a ser enviada ao servidor
-        System.out.print("Texto a ser enviado ao servidor: ");
-        String sentence = input.nextLine();
-        sendData = sentence.getBytes();
+        String sendString = "Start!";
+        byte[] sendData = new byte[256];
+        byte[] receivedData = new byte[256];
+        sendData = sendString.getBytes();
 
-        // Preparando o pacote
-        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, porta);
+        DatagramPacket send = new DatagramPacket(sendData, sendData.length, IPAddress, PORT);
 
-        // Enviando o pacote
-        System.out.println("Enviando pacote UDP para " + hostname + ":" + porta);
-        clientSocket.send(sendPacket);
+        client.send(send);
 
-        // Esperando receber um pacote do servidor
-        System.out.println("Aguardando receber um pacote de " + hostname);
+        DatagramPacket receive = new DatagramPacket(receivedData, receivedData.length);
+        client.receive(receive);
+        String integerNumber = new String(receive.getData());
+        int number = Integer.parseInt(integerNumber.replaceAll("[\\D]", ""));
+        System.out.println("Receveid number: " + number);
 
-        // Preparando o pacote
-        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+        sendString = String.valueOf(number + 1);
+        sendData = sendString.getBytes();
+        send = new DatagramPacket(sendData, sendData.length, IPAddress, PORT);
+        client.send(send);
+        System.out.println("Sending the number: " + ++number);
 
-        // Recebendo o pacote
-        clientSocket.receive(receivePacket);
+        receive = new DatagramPacket(receivedData, receivedData.length);
+        client.receive(receive);
+        integerNumber = new String(receive.getData());
+        number = Integer.parseInt(integerNumber.replaceAll("[\\D]", ""));
+        System.out.println("Receveid number: " + number);
 
-        // Tratando o pacote recebido
-        String modifiedSentence = new String(receivePacket.getData());
-        System.out.println("Pacote UDP recebido: " + modifiedSentence);
-
-        // Fechando a comunicacao via socket
-        clientSocket.close();
-        System.out.println("Socket cliente fechado!");
+        client.close();
     }
 }
