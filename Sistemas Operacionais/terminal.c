@@ -13,6 +13,11 @@
 #include <fcntl.h>
 #include <stdbool.h>
 
+char* currentPath() {
+    char currentPath[1024]; // Variável que recebera o path atual
+    return getcwd(currentPath, sizeof(currentPath));
+}
+
 char* readLine(){
     char line; // Comando a ser digitado pelo usuário
     int length = 1024; // Tamanho do vetor que vai alocar a string acima
@@ -84,7 +89,7 @@ bool splitInputRedirect(char* line, char** args) {
 
 
 // Separar a linha em seus diversos comandos
-char **splitLine(char *line) {
+char ** splitLine(char* line) {
     int length = 128;
     int index = 0;
     char *word  = malloc(length * sizeof(char*));
@@ -148,7 +153,7 @@ void executePipeCommand(char** argList, char** pip) {
 		close(piped[0]);
 		execvp(pip[0],pip);
 		
-		printf("Comando não encontrado\n");
+		printf("\nComando não encontrado\n");
 		exit(1);
     }
     close(piped[1]);
@@ -162,14 +167,12 @@ void outputRedirect(char** argList, char** pip) {
     rc = fork();
     if(rc < 0){
         printf("Erro no fork");
-        exit(1);
     } else if (rc == 0) {
         close(STDOUT_FILENO);
         open(pip[1], O_CREAT|O_WRONLY|O_TRUNC, S_IRWXU);
-
         execvp(argList[0], argList);
         printf("Comando não encontrado\n");
-        exit(1);
+         exit(1);
     } else {
         int wt = wait(NULL);
     }
@@ -195,7 +198,6 @@ void inputRedirect(char** argList, char** pipe) {
 }
 
 void execute(char** argList) {
-
     int rc;
 
     rc = fork();
@@ -236,9 +238,11 @@ void execute(char** argList) {
 
 
 
+
+
 int main(){
 
-    char currentPath[1024]; // Variável que recebera o path atual
+    
 
     int length = 128;
 	char *command = malloc(length * sizeof(char*));
@@ -248,11 +252,12 @@ int main(){
     bool hasPipe = false, hasOutputRedirect = false, hasInputRedirect = false;
     char* args[2];
     char* cd[1];
+    cd[0] = "cd";
 
     int comp = 1;
 
     while(true) {
-        printf("%s>", getcwd(currentPath, sizeof(currentPath)));
+        printf("%s>", currentPath());
         command = readLine();
 
         if (command[0] != '\0'){
@@ -268,34 +273,24 @@ int main(){
             if(hasPipe) {
                 argList = splitLine(args[0]);
                 args[1] = splitBlank(args[1]);
+                executePipeCommand(argList, pipe);
             } else if(hasOutputRedirect) {
                 argList = splitLine(args[0]);
                 args[1] = splitBlank(args[1]);
+                outputRedirect(argList, args);
             } else if(hasInputRedirect) {
                 argList = splitLine(args[0]);
                 args[1] = splitBlank(args[1]);
+                inputRedirect(argList, args);
             } else {
                 argList = splitLine(command);
-            }
-
-            if (hasPipe){
-                executePipeCommand(argList, pipe);
-            }
-            else if(hasOutputRedirect){
-                outputRedirect(argList, args);
-
-            } else if(hasInputRedirect) {
-                inputRedirect(argList, args);
-            }
-            else {
                 comp = strcmp(argList[0], cd[0]); // Verifica se o comando é "cd"
 				if(comp == 0){
 					chdir(argList[1]); 
-				}else{
+				} else{
 					execute(argList); // executa o comando sem pipe
 				}
             }
-
         }
         // Libera memória do comando para receber a próxima leitura
         free(command);
