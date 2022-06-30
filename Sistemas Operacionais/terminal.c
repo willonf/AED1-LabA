@@ -239,9 +239,6 @@ void execute(char **args)
 		{
 			int wc = wait(NULL);
 		}
-		else
-		{
-		}
 	}
 }
 
